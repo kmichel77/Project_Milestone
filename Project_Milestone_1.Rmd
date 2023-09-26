@@ -1,0 +1,39 @@
+---
+title: "Project Milestone 1 "
+output: html_document
+date: "2023-09-26"
+---
+
+Kimberly Michel, Katherine Nazarian 
+
+link to repository: https://github.com/kmichel77/Project_Milestone.git
+```
+Meeting and Planning 
+
+1. What is your team's preferred method of communication? 
+       Texting and Zoom. 
+
+2. When will your team be holding meetings? 
+       Every Tuesday and Friday after 6 PM 
+  How frequently will you meet? 
+      2 times a week. 
+  Are there times or days that work well for everyone? 
+      Every day except Wednesdays and Saturdays. 
+  
+3. Discuss future non-academic committments that might affect member's availability. 
+      Kimberly - 2 upcoming trips, but they should not affect week days. 
+
+4. Discuss meeting tempo: 
+    We will do a quick check in at the beginning of meetings to make sure that we are up to date on commits that were made that the other may not be aware of. 
+    
+    
+Roles 
+
+1. How is your team going to keep track of progress? 
+    Kimberly will keep a checklist of tasks that have been completed and tasks that are still pending to ensure we dont fall behind before the due date. 
+
+2. Who will be taking minutes, creating agendas, and contacting the course facilitators with questions? 
+
+
+
+
