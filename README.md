@@ -1,5 +1,5 @@
 # Project_Milestone
 
-git pull origin Project_Milestone
+git config pull.rebase false 
 
 
