@@ -1,29 +1,39 @@
 ---
-title: "Project Milestone"
+title: "Project Milestone 1 "
 output: html_document
 date: "2023-09-26"
 ---
 
-```{r setup, include=FALSE}
-Question 1 : 
+Kimberly Michel, Katherine Nazarian 
+
+link to repository: https://github.com/kmichel77/Project_Milestone.git
 ```
+Meeting and Planning 
 
-## R Markdown
+1. What is your team's preferred method of communication? 
+       Texting and Zoom. 
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+2. When will your team be holding meetings? 
+       Every Tuesday and Friday after 6 PM 
+  How frequently will you meet? 
+      2 times a week. 
+  Are there times or days that work well for everyone? 
+      Every day except Wednesdays and Saturdays. 
+  
+3. Discuss future non-academic committments that might affect member's availability. 
+      Kimberly - 2 upcoming trips, but they should not affect week days. 
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+4. Discuss meeting tempo: 
+    We will do a quick check in at the beginning of meetings to make sure that we are up to date on commits that were made that the other may not be aware of. 
+    
+    
+Roles 
 
-```{r cars}
-Question 2 
-```
+1. How is your team going to keep track of progress? 
+    Kimberly will keep a checklist of tasks that have been completed and tasks that are still pending to ensure we dont fall behind before the due date. 
 
-## Including Plots
+2. Who will be taking minutes, creating agendas, and contacting the course facilitators with questions? 
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
