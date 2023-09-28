@@ -8,7 +8,16 @@ This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute
 Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
 
 ```{r}
-plot(cars)
+library(readr)
+
+ca_vax_rates_quarter <- read_csv("ca_vax_rates_quarter.csv")
+View(ca_vax_rates_quarter)
+
+sim_flu_CA <- read_csv("sim_flu_CA.csv")
+View(sim_flu_CA)
+
+sim_flu_LACounty <- read_csv("sim_flu_LACounty.csv")
+View(sim_flu_LACounty)
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
