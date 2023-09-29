@@ -4,7 +4,7 @@ output: html_document
 date: "2023-09-26"
 ---
 
-Kimberly Michel, Katherine Nazarian 
+Kimberly Michel, Katherine Nazarian 123
 
 link to repository: https://github.com/kmichel77/Project_Milestone.git
 ```
@@ -22,6 +22,7 @@ Meeting and Planning
   
 3. Discuss future non-academic committments that might affect member's availability. 
       Kimberly - 2 upcoming trips, but they should not affect week days. 
+      Kathy - Tend to keep weekends free of school, similar to Kimberly, and we've both worked together on projects before and communicate effectively on our schedule in order to meet on a weekly basis. 
 
 4. Discuss meeting tempo: 
     We will do a quick check in at the beginning of meetings to make sure that we are up to date on commits that were made that the other may not be aware of. 
@@ -33,7 +34,7 @@ Roles
     Kimberly will keep a checklist of tasks that have been completed and tasks that are still pending to ensure we dont fall behind before the due date. 
 
 2. Who will be taking minutes, creating agendas, and contacting the course facilitators with questions? 
-
+  Kathy will be taking notes during meetings and creating agendas. The both of us with contact the course facilitators when needed.
 
 
 
