@@ -2,6 +2,7 @@
 title: "Project Milestone 2"
 output: html_notebook
 ---
+Authors: Kathy Nazarian, Kimberly Michel
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
 
@@ -9,15 +10,147 @@ Try executing this chunk by clicking the *Run* button within the chunk or by pla
 
 ```{r}
 library(readr)
-
+#import data sets
 ca_vax_rates_quarter <- read_csv("ca_vax_rates_quarter.csv")
-View(ca_vax_rates_quarter)
+ca_vax <- ca_vax_rates_quarter
 
 sim_flu_CA <- read_csv("sim_flu_CA.csv")
-View(sim_flu_CA)
+CA_flu <- sim_flu_CA
 
 sim_flu_LACounty <- read_csv("sim_flu_LACounty.csv")
-View(sim_flu_LACounty)
+LACounty_flu <- sim_flu_LACounty
+```
+
+
+```{r}
+#clean data using snake case
+names(ca_vax)[1] <- 'county_name'
+names(ca_vax)[2] <- 'county_type'
+names(ca_vax)[3] <- 'demographic_category'
+names(ca_vax)[4] <- 'demographic_value'
+names(ca_vax)[5] <- 'est_population'
+names(ca_vax)[6] <- 'date_admin'
+names(ca_vax)[7] <- 'total_partial_vax'
+names(ca_vax)[8] <- 'cum_fully_vax'
+names(ca_vax)[9] <- 'cum_atleast_one_dose'
+names(ca_vax)[10] <- 'cum_unvax'
+names(ca_vax)[11] <- 'suppress_data'
+names(ca_vax)[12] <- 'cum_up_to_date_vax'
+names(ca_vax)[13] <- 'quarter'
+
+names(LACounty_flu)[1] <- 'date'
+names(LACounty_flu)[2] <- 'age_category'
+names(LACounty_flu)[3] <- 'sex'
+names(LACounty_flu)[4] <- 'race_eth'
+names(LACounty_flu)[5] <- 'dt_report'
+names(LACounty_flu)[6] <- 'dx_new'
+names(LACounty_flu)[7] <- 'recovered_new'
+names(LACounty_flu)[8] <- 'infected_current'
+names(LACounty_flu)[9] <- 'infected_cum'
+names(LACounty_flu)[10] <- 'recovered_cum'
+names(LACounty_flu)[11] <- 'susceptible'
+names(LACounty_flu)[12] <- 'severe_new'
+names(LACounty_flu)[13] <- 'severe_cum'
+
+```
+
+
+```{r}
+#data cleaning for LACounty_flu ds
+
+#dt_dx string is 'chr', must be changed to date
+install.packages("lubridate")
+library(lubridate)
+str(LACounty_flu)
+
+#reformat date in LACounty_flu dataset from chr to date format
+library(dplyr)
+library(lubridate)
+LACounty_flu <- LACounty_flu %>%
+  mutate(date = as.Date(as.character(LACounty_flu$date), format = "%d%b%Y"))
+
+#data cleaned by descending order by dt_dx
+LACounty_flu <- LACounty_flu[order(LACounty_flu$date),]
+```
+
+
+```{r}
+# data cleaning for CA_flu ds
+#data cleaned by descending order of diagnosis date
+library(dplyr)
+library(tidyverse)
+CA_flu <- CA_flu[order(CA_flu$dt_diagnosis),]
+
+```
+
+
+```{r}
+#data cleaning for ca_vax ds
+
+#data reorganized by descending order of date vax was given
+ca_vax <- ca_vax[order(ca_vax$date_admin),]
+```
+
+
+```{r}
+#structure of each df:
+str(CA_flu)
+str(LACounty_flu)
+str(ca_vax)
+
+# data type descriptions
+summary(ca_vax_rates_quarter$`Estimated Population`)
+summary(ca_vax_rates_quarter$`Estimated Population`)
+summary(ca_vax_rates_quarter$`Cumulative Fully Vaccinated`)
+summary(ca_vax_rates_quarter$`Cumulative Unvaccinated`)
+summary(sim_flu_CA$new_infections)
+summary(sim_flu_CA$new_severe)
+```
+
+
+```{r}
+#cont. of milestone 2
+
+#Description of dataset:
+
+#Datasets appear like they were collected by a health department within CA or Los Angeles. The data that was collected includes cases of flu as well as vaccine uptake data. Timeframe of each dataset ranges between 2020-2023 within different counties across California.
+
+#Question/statement: Reporting whether there’s any correlation between flu vaccination rates and covid vaccination rates.
+
+#The dataset provides vaccination rates within many counties in california as well as the amount of cases. This will allow us to conduct our analysis in order to determine whether there’s any correlation between flu and covid vaccination rates by running appropriate statistical tests.
+
+#5+ data types:
+
+# -Population sizes 
+#This information is essential as it’ll allow us to conduct our calculations in order to determine rates.
+
+# -Cumulative up to date vaccinated/unvaccinated (exposure)
+#Will be using this data to calculate vaccination rates in order to compare them to flu rates among exposed and unexposed
+
+# -Current infected (outcome)
+#Will be using this data (incidence rate) to compare to exposed and unexposed populations (vaccinated/unvaccinated)
+
+# -New severe
+#Will be using this data (incidence rate) to compare to exposed and unexposed populations (vaccinated/unvaccinated)
+
+# -County
+#Could be a confounding variable. Could assess whether some counties have higher vaccination/flu rates which would be considered a disparity.
+
+# -Age 
+#Could be a counting variable as well. We could use direct standardization in order to see the crude rates among different age groups in order to assess whether certain age groups have higher rates than others.
+
+#Data cleaning:
+
+#Completed:
+# -renamed all dataset column names by snake case
+# -Changed LACounty flu “dt_dx” column from chr string to date, then arranges in chronological order + removed extra columns + moved “date” column to first
+
+#Need to be cleaned:
+# -Demographic value needs to be reformatted from chr to num (ca_vax)
+# -age needs to be reformatted from chr to num (LACounty_flu)
+# -Age_cat needs to be reformatted from chr to number (ca_flu)
+# -Ethnicity needs to be reformatted from num to chr (ca_flu)
+
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
