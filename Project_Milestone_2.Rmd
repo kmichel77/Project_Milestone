@@ -21,7 +21,6 @@ library(tidyverse)
 \newpage 
 ### Import Data Sets
 ```{r}
-#import data sets
 ca_vax_rates_quarter <- read_csv("ca_vax_rates_quarter.csv")
 ca_vax <- ca_vax_rates_quarter
 
@@ -151,7 +150,7 @@ summary(sim_flu_CA$new_severe)
 
 Datasets appear like they were collected by a health department within CA or Los Angeles. The data that was collected includes cases of flu as well as vaccine uptake data. Timeframe of each dataset ranges between 2020-2023 within different counties across California.
 
-Question/statement: Reporting whether there’s any correlation between flu vaccination rates and covid vaccination rates.
+Question/Statement: Reporting whether there’s any correlation between flu vaccination rates and covid vaccination rates.
 
 The dataset provides vaccination rates within many counties in california as well as the amount of cases. This will allow us to conduct our analysis in order to determine whether there’s any correlation between flu and covid vaccination rates by running appropriate statistical tests.
 
