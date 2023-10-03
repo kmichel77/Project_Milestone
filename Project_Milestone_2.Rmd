@@ -25,10 +25,10 @@ CA_flu <- sim_flu_CA
 sim_flu_LACounty <- read_csv("sim_flu_LACounty.csv")
 LACounty_flu <- sim_flu_LACounty
 ```
+\newpage 
 
-
+### Clean Data using Snake Case
 ```{r}
-#clean data using snake case
 names(ca_vax)[1] <- 'county_name'
 names(ca_vax)[2] <- 'county_type'
 names(ca_vax)[3] <- 'demographic_category'
@@ -58,11 +58,9 @@ names(LACounty_flu)[12] <- 'severe_new'
 names(LACounty_flu)[13] <- 'severe_cum'
 
 ```
-
+### Data Cleaning for LACounty_flu ds
 
 ```{r}
-#data cleaning for LACounty_flu ds
-
 #dt_dx string is 'chr', must be changed to date
 
 str(LACounty_flu)
@@ -74,7 +72,9 @@ LACounty_flu <- LACounty_flu %>%
 #data cleaned by descending order by dt_dx
 LACounty_flu <- LACounty_flu[order(LACounty_flu$date),]
 ```
+\newpage
 
+### Data Cleaning for CA_flu ds
 
 ```{r}
 # data cleaning for CA_flu ds
@@ -82,7 +82,7 @@ LACounty_flu <- LACounty_flu[order(LACounty_flu$date),]
 CA_flu <- CA_flu[order(CA_flu$dt_diagnosis),]
 
 ```
-
+###Ddata Cleaning for ca_vax ds
 
 ```{r}
 #data cleaning for ca_vax ds
@@ -90,10 +90,11 @@ CA_flu <- CA_flu[order(CA_flu$dt_diagnosis),]
 #data reorganized by descending order of date vax was given
 ca_vax <- ca_vax[order(ca_vax$date_admin),]
 ```
+\newpage
 
+### Structure of each df:
 
 ```{r}
-#Structure of each df:
 str(CA_flu)
 ```
 
@@ -106,10 +107,11 @@ str(LACounty_flu)
 ```{r}
 str(ca_vax)
 ```
+\newpage
 
+### Data Type Descriptions
 
 ```{r}
-# data type descriptions
 summary(ca_vax_rates_quarter$`Estimated Population`)
 ```
 
@@ -137,8 +139,9 @@ summary(sim_flu_CA$new_infections)
 ```{r}
 summary(sim_flu_CA$new_severe)
 ```
+\newpage
 
-Description of dataset:
+### Description of dataset:
 
 Datasets appear like they were collected by a health department within CA or Los Angeles. The data that was collected includes cases of flu as well as vaccine uptake data. Timeframe of each dataset ranges between 2020-2023 within different counties across California.
 
@@ -146,7 +149,7 @@ Question/statement: Reporting whether there’s any correlation between flu vacc
 
 The dataset provides vaccination rates within many counties in california as well as the amount of cases. This will allow us to conduct our analysis in order to determine whether there’s any correlation between flu and covid vaccination rates by running appropriate statistical tests.
 
-5+ data types:
+### 5+ data types:
 
 -Population sizes 
 This information is essential as it’ll allow us to conduct our calculations in order to determine rates.
@@ -163,7 +166,7 @@ Could be a confounding variable. Could assess whether some counties have higher 
 -Age 
 Could be a counting variable as well. We could use direct standardization in order to see the crude rates among different age groups in order to assess whether certain age groups have higher rates than others.
 
-Data cleaning:
+### Data cleaning:
 
 Completed:
  -renamed all dataset column names by snake case
