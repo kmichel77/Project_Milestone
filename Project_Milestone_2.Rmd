@@ -93,9 +93,17 @@ ca_vax <- ca_vax[order(ca_vax$date_admin),]
 
 
 ```{r}
-#structure of each df:
+#Structure of each df:
 str(CA_flu)
+```
+
+
+```{r}
 str(LACounty_flu)
+```
+
+
+```{r}
 str(ca_vax)
 ```
 
@@ -129,7 +137,6 @@ summary(sim_flu_CA$new_infections)
 ```{r}
 summary(sim_flu_CA$new_severe)
 ```
-#cont. of milestone 2
 
 Description of dataset:
 
