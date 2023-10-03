@@ -1,6 +1,8 @@
 ---
 title: "Project Milestone 2"
-output: html_notebook
+output:
+  pdf_document: default
+  html_notebook: default
 ---
 Authors: Kathy Nazarian, Kimberly Michel
 
@@ -13,7 +15,11 @@ library(dplyr)
 library(tidyverse)
 ```
 
+```{r}
 
+```
+\newpage 
+### Import Data Sets
 ```{r}
 #import data sets
 ca_vax_rates_quarter <- read_csv("ca_vax_rates_quarter.csv")
@@ -58,6 +64,8 @@ names(LACounty_flu)[12] <- 'severe_new'
 names(LACounty_flu)[13] <- 'severe_cum'
 
 ```
+\newpage
+
 ### Data Cleaning for LACounty_flu ds
 
 ```{r}
@@ -72,7 +80,6 @@ LACounty_flu <- LACounty_flu %>%
 #data cleaned by descending order by dt_dx
 LACounty_flu <- LACounty_flu[order(LACounty_flu$date),]
 ```
-\newpage
 
 ### Data Cleaning for CA_flu ds
 
@@ -82,7 +89,7 @@ LACounty_flu <- LACounty_flu[order(LACounty_flu$date),]
 CA_flu <- CA_flu[order(CA_flu$dt_diagnosis),]
 
 ```
-###Ddata Cleaning for ca_vax ds
+### Data Cleaning for ca_vax ds
 
 ```{r}
 #data cleaning for ca_vax ds
@@ -107,7 +114,6 @@ str(LACounty_flu)
 ```{r}
 str(ca_vax)
 ```
-\newpage
 
 ### Data Type Descriptions
 
