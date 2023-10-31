@@ -185,6 +185,8 @@ Need to be cleaned:
 
 
 ```{r}
-
+readr::write_csv(CA_flu, "CA_flu.csv")
+readr::write_csv(LACounty_flu, "LACounty_flu.csv")
+readr::write_csv(ca_vax, "ca_vax.csv")
 ```
 
