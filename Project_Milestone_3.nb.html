@@ -1753,31 +1753,57 @@ display: none;
 
 <!-- rnb-text-begin -->
 <p>Authors: Katherine Nazarian, Kimberly Michel</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZWFkcilcbkNBX2ZsdSA8LSByZWFkX2NzdihcIkNBX2ZsdS5jc3ZcIilcblZpZXcoQ0FfZmx1KVxuTEFDb3VudHlfZmx1IDwtIHJlYWRfY3N2KFwiTEFDb3VudHlfZmx1LmNzdlwiKVxuVmlldyhMQUNvdW50eV9mbHUpXG5jYV92YXggPC0gcmVhZF9jc3YoXCJjYV92YXguY3N2XCIpXG5WaWV3KGNhX3ZheClcblxuYGBgIn0= -->
+<pre class="r"><code>library(readr)
+CA_flu &lt;- read_csv(&quot;CA_flu.csv&quot;)
+View(CA_flu)
+LACounty_flu &lt;- read_csv(&quot;LACounty_flu.csv&quot;)
+View(LACounty_flu)
+ca_vax &lt;- read_csv(&quot;ca_vax.csv&quot;)
+View(ca_vax)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 <div id="subset-rows-or-columns-as-needed" class="section level2">
 <h2>Subset rows or columns, as needed</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxvdChjYXJzKVxuYGBgIn0= -->
-<pre class="r"><code>plot(cars)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudW5pcXVlKGNhX3ZheCRjb3VudHlfdHlwZSlcbmBgYCJ9 -->
+<pre class="r"><code>unique(ca_vax$county_type)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiTUlYRURcIlxuIn0= -->
+<pre><code>[1] &quot;MIXED&quot;</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
 <div id="create-new-variables-needed-for-analysis-minimum-2" class="section level2">
 <h2>Create new variables needed for analysis (minimum 2)</h2>
 <p>New variables should be created based on existing columns; for
-example Calculating a rate Combining character strings Aggregation</p>
+example Calculating a rate, Combining character strings, Aggregation</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2ZvciBjYV92YXggcmF0ZSB3ZSBjYW4gY2FsY3VsYXRlIHZheCByYXRlcyB1c2luZyBjdW1fZnVsbHlfdmF4L2VzdF9wb3B1bGF0aW9uLCBidXQgd2Ugd291bGQgaGF2ZSB0byByZW1vdmUgdGhlIE5BIHZhbHVlcyBcblxuI2ZvciBDQV9mbHUgd2UgY2FuIGNhbGN1bGF0ZSByYXRlIG9mIGluZmVjdGlvbnMvcG9wdWxhdGlvbnMgXG5cblxuYGBgIn0= -->
+<pre class="r"><code>#for ca_vax rate we can calculate vax rates using cum_fully_vax/est_population, but we would have to remove the NA values 
+
+#for CA_flu we can calculate rate of infections/populations 
+</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
 <div id="clean-variables-needed-for-analysis-minimum-2" class="section level2">
 <h2>Clean variables needed for analysis (minimum 2)</h2>
-<p>Examples Recode invalid values Handle missing data Recode
+<p>Examples Recode invalid values, Handle missing data, Recode
 categories</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3JlY29kZS9yZW1vdmUgTkEgdmFsdWVzIFxuYGBgIn0= -->
+<pre class="r"><code>#recode/remove NA values </code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -1792,7 +1818,7 @@ categories</p>
 <div id="data-dictionary-based-on-clean-dataset-minimum-4-data-elements-including" class="section level2">
 <h2>Data dictionary based on clean dataset (minimum 4 data elements),
 including:</h2>
-<p>Variable name Data type Description</p>
+<p>Variable name, Data type, Description</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-chunk-end -->
@@ -1803,6 +1829,9 @@ including:</h2>
 elements</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3dlJ2xsIG1ha2UgYSBnZ3Bsb3QgYXQgc29tZSBwb2ludCBcbmBgYCJ9 -->
+<pre class="r"><code>#we&#39;ll make a ggplot at some point </code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -1824,7 +1853,7 @@ run in the editor is displayed.</p>
 <!-- rnb-chunk-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUHJvamVjdCBNaWxlc3RvbmUgMyIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKQXV0aG9yczogS2F0aGVyaW5lIE5hemFyaWFuLCBLaW1iZXJseSBNaWNoZWwKCiMjIFN1YnNldCByb3dzIG9yIGNvbHVtbnMsIGFzIG5lZWRlZAoKYGBge3J9CnBsb3QoY2FycykKYGBgCgojIyBDcmVhdGUgbmV3IHZhcmlhYmxlcyBuZWVkZWQgZm9yIGFuYWx5c2lzIChtaW5pbXVtIDIpCgpOZXcgdmFyaWFibGVzIHNob3VsZCBiZSBjcmVhdGVkIGJhc2VkIG9uIGV4aXN0aW5nIGNvbHVtbnM7IGZvciBleGFtcGxlIENhbGN1bGF0aW5nIGEgcmF0ZSBDb21iaW5pbmcgY2hhcmFjdGVyIHN0cmluZ3MgQWdncmVnYXRpb24KCmBgYHtyfQoKYGBgCgojIyBDbGVhbiB2YXJpYWJsZXMgbmVlZGVkIGZvciBhbmFseXNpcyAobWluaW11bSAyKQoKRXhhbXBsZXMgUmVjb2RlIGludmFsaWQgdmFsdWVzIEhhbmRsZSBtaXNzaW5nIGRhdGEgUmVjb2RlIGNhdGVnb3JpZXMKCmBgYHtyfQoKYGBgCgojIyBEYXRhIHJlLXN0cnVjdHVyZWQgYXMgbmVlZGVkCgooYWdncmVnYXRlZC9zdW1tYXJpemVkIGFuZC9vciBwaXZvdGVkKQoKYGBge3J9CgpgYGAKCiMjIERhdGEgZGljdGlvbmFyeSBiYXNlZCBvbiBjbGVhbiBkYXRhc2V0IChtaW5pbXVtIDQgZGF0YSBlbGVtZW50cyksIGluY2x1ZGluZzoKClZhcmlhYmxlIG5hbWUgRGF0YSB0eXBlIERlc2NyaXB0aW9uCgpgYGB7cn0KCmBgYAoKIyMgT25lIG9yIG1vcmUgdGFibGVzIHdpdGggZGVzY3JpcHRpdmUgc3RhdGlzdGljcyBmb3IgNCBkYXRhIGVsZW1lbnRzCgpgYGB7cn0KCmBgYAoKIyMgSHRtbCBvdXRwdXQgdGhhdCBpcyBwcm9mZXNzaW9uYWxseSBwcmVwYXJlZCBmb3IgcHJlc2VudGF0aW9uCgpPbmx5IHRoZSBuZWNlc3NhcnkgaW5mb3JtYXRpb24gaXMgb3V0cHV0dGVkICh5b3Ugc2hvdWxkIHN1cHByZXNzLCBmb3IgZXhhbXBsZSwgZW50aXJlIGRhdGEgZnJhbWUgb3V0cHV0cykgVXNlIG9mIGhlYWRlcnMgYW5kIHN1YiBoZWFkZXJzIHRvIGNyZWF0ZSBhbiBvcmdhbml6ZWQgZG9jdW1lbnQKCmBgYHtyfQoKYGBgCgpUaGUgcHJldmlldyBzaG93cyB5b3UgYSByZW5kZXJlZCBIVE1MIGNvcHkgb2YgdGhlIGNvbnRlbnRzIG9mIHRoZSBlZGl0b3IuIENvbnNlcXVlbnRseSwgdW5saWtlICpLbml0KiwgKlByZXZpZXcqIGRvZXMgbm90IHJ1biBhbnkgUiBjb2RlIGNodW5rcy4gSW5zdGVhZCwgdGhlIG91dHB1dCBvZiB0aGUgY2h1bmsgd2hlbiBpdCB3YXMgbGFzdCBydW4gaW4gdGhlIGVkaXRvciBpcyBkaXNwbGF5ZWQuCgpgYGB7cn0KCmBgYAo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUHJvamVjdCBNaWxlc3RvbmUgMyIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKQXV0aG9yczogS2F0aGVyaW5lIE5hemFyaWFuLCBLaW1iZXJseSBNaWNoZWwKCgpgYGB7cn0KbGlicmFyeShyZWFkcikKQ0FfZmx1IDwtIHJlYWRfY3N2KCJDQV9mbHUuY3N2IikKVmlldyhDQV9mbHUpCkxBQ291bnR5X2ZsdSA8LSByZWFkX2NzdigiTEFDb3VudHlfZmx1LmNzdiIpClZpZXcoTEFDb3VudHlfZmx1KQpjYV92YXggPC0gcmVhZF9jc3YoImNhX3ZheC5jc3YiKQpWaWV3KGNhX3ZheCkKCmBgYAoKIyMgU3Vic2V0IHJvd3Mgb3IgY29sdW1ucywgYXMgbmVlZGVkCgpgYGB7cn0KI2NhbiBnZXQgcmlkIG9mIGNvdW50eV90eXBlIGluIGNhX3ZheCAob25seSAxKSAKI2NhbiBnZXQgcmlkIG9mIGR0X3JlcG9ydCBpbiBMQUNvdW50eV9mbHUgKG9ubHkgMSkKCnVuaXF1ZShjYV92YXgkY291bnR5X3R5cGUpCmBgYAoKIyMgQ3JlYXRlIG5ldyB2YXJpYWJsZXMgbmVlZGVkIGZvciBhbmFseXNpcyAobWluaW11bSAyKQoKTmV3IHZhcmlhYmxlcyBzaG91bGQgYmUgY3JlYXRlZCBiYXNlZCBvbiBleGlzdGluZyBjb2x1bW5zOyBmb3IgZXhhbXBsZSBDYWxjdWxhdGluZyBhIHJhdGUsIENvbWJpbmluZyBjaGFyYWN0ZXIgc3RyaW5ncywgQWdncmVnYXRpb24KCmBgYHtyfQojZm9yIGNhX3ZheCByYXRlIHdlIGNhbiBjYWxjdWxhdGUgdmF4IHJhdGVzIHVzaW5nIGN1bV9mdWxseV92YXgvZXN0X3BvcHVsYXRpb24sIGJ1dCB3ZSB3b3VsZCBoYXZlIHRvIHJlbW92ZSB0aGUgTkEgdmFsdWVzIAoKI2ZvciBDQV9mbHUgd2UgY2FuIGNhbGN1bGF0ZSByYXRlIG9mIGluZmVjdGlvbnMvcG9wdWxhdGlvbnMgCgoKYGBgCgojIyBDbGVhbiB2YXJpYWJsZXMgbmVlZGVkIGZvciBhbmFseXNpcyAobWluaW11bSAyKQoKRXhhbXBsZXMgUmVjb2RlIGludmFsaWQgdmFsdWVzLCBIYW5kbGUgbWlzc2luZyBkYXRhLCBSZWNvZGUgY2F0ZWdvcmllcwoKYGBge3J9CiNyZWNvZGUvcmVtb3ZlIE5BIHZhbHVlcyAKYGBgCgojIyBEYXRhIHJlLXN0cnVjdHVyZWQgYXMgbmVlZGVkCgooYWdncmVnYXRlZC9zdW1tYXJpemVkIGFuZC9vciBwaXZvdGVkKQoKYGBge3J9CgpgYGAKCiMjIERhdGEgZGljdGlvbmFyeSBiYXNlZCBvbiBjbGVhbiBkYXRhc2V0IChtaW5pbXVtIDQgZGF0YSBlbGVtZW50cyksIGluY2x1ZGluZzoKClZhcmlhYmxlIG5hbWUsIERhdGEgdHlwZSwgRGVzY3JpcHRpb24KCmBgYHtyfQoKYGBgCgojIyBPbmUgb3IgbW9yZSB0YWJsZXMgd2l0aCBkZXNjcmlwdGl2ZSBzdGF0aXN0aWNzIGZvciA0IGRhdGEgZWxlbWVudHMKCmBgYHtyfQojd2UnbGwgbWFrZSBhIGdncGxvdCBhdCBzb21lIHBvaW50IApgYGAKCiMjIEh0bWwgb3V0cHV0IHRoYXQgaXMgcHJvZmVzc2lvbmFsbHkgcHJlcGFyZWQgZm9yIHByZXNlbnRhdGlvbgoKT25seSB0aGUgbmVjZXNzYXJ5IGluZm9ybWF0aW9uIGlzIG91dHB1dHRlZCAoeW91IHNob3VsZCBzdXBwcmVzcywgZm9yIGV4YW1wbGUsIGVudGlyZSBkYXRhIGZyYW1lIG91dHB1dHMpIFVzZSBvZiBoZWFkZXJzIGFuZCBzdWIgaGVhZGVycyB0byBjcmVhdGUgYW4gb3JnYW5pemVkIGRvY3VtZW50CgpgYGB7cn0KCmBgYAoKVGhlIHByZXZpZXcgc2hvd3MgeW91IGEgcmVuZGVyZWQgSFRNTCBjb3B5IG9mIHRoZSBjb250ZW50cyBvZiB0aGUgZWRpdG9yLiBDb25zZXF1ZW50bHksIHVubGlrZSAqS25pdCosICpQcmV2aWV3KiBkb2VzIG5vdCBydW4gYW55IFIgY29kZSBjaHVua3MuIEluc3RlYWQsIHRoZSBvdXRwdXQgb2YgdGhlIGNodW5rIHdoZW4gaXQgd2FzIGxhc3QgcnVuIGluIHRoZSBlZGl0b3IgaXMgZGlzcGxheWVkLgoKYGBge3J9CgpgYGAK</div>
 
 
 

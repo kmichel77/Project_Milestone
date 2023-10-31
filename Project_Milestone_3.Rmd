@@ -5,26 +5,45 @@ output: html_notebook
 
 Authors: Katherine Nazarian, Kimberly Michel
 
+
+```{r}
+library(readr)
+CA_flu <- read_csv("CA_flu.csv")
+View(CA_flu)
+LACounty_flu <- read_csv("LACounty_flu.csv")
+View(LACounty_flu)
+ca_vax <- read_csv("ca_vax.csv")
+View(ca_vax)
+
+```
+
 ## Subset rows or columns, as needed
 
 ```{r}
-plot(cars)
+#can get rid of county_type in ca_vax (only 1) 
+#can get rid of dt_report in LACounty_flu (only 1)
+
+unique(ca_vax$county_type)
 ```
 
 ## Create new variables needed for analysis (minimum 2)
 
-New variables should be created based on existing columns; for example Calculating a rate Combining character strings Aggregation
+New variables should be created based on existing columns; for example Calculating a rate, Combining character strings, Aggregation
 
 ```{r}
+#for ca_vax rate we can calculate vax rates using cum_fully_vax/est_population, but we would have to remove the NA values 
+
+#for CA_flu we can calculate rate of infections/populations 
+
 
 ```
 
 ## Clean variables needed for analysis (minimum 2)
 
-Examples Recode invalid values Handle missing data Recode categories
+Examples Recode invalid values, Handle missing data, Recode categories
 
 ```{r}
-
+#recode/remove NA values 
 ```
 
 ## Data re-structured as needed
@@ -37,7 +56,7 @@ Examples Recode invalid values Handle missing data Recode categories
 
 ## Data dictionary based on clean dataset (minimum 4 data elements), including:
 
-Variable name Data type Description
+Variable name, Data type, Description
 
 ```{r}
 
@@ -46,7 +65,7 @@ Variable name Data type Description
 ## One or more tables with descriptive statistics for 4 data elements
 
 ```{r}
-
+#we'll make a ggplot at some point 
 ```
 
 ## Html output that is professionally prepared for presentation
