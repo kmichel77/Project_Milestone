@@ -37,6 +37,10 @@ CA_flu1 <- CA_flu %>%
   rename("new_infected" = new_infections) %>% 
   rename("age_category" = age_cat) %>% 
   select(-time_int, -race_ethnicity, -report_date, -dt_diagnosis, -pop, -new_unrecovered, -cumulative_unrecovered)
+
+ca_vax1 <- ca_vax %>% 
+  select(-county_type, -suppress_data)
+
 #can get rid of county_type in ca_vax (only 1) 
 #can get rid of dt_report in LACounty_flu (only 1)
 
@@ -72,8 +76,16 @@ Examples Recode invalid values, Handle missing data, Recode categories
 
 CA_flu_merge <- merge(x = CA_flu1, y = LACounty_1, by = c("county", "age_category", "sex", "new_infected", "new_recovered", "susceptible", "current_infected", "cumulative_infected", "cumulative_recovered", "new_severe", "cumulative_severe"), all = TRUE)
 
-CA_flu_merge_1 <- CA_flu_merge %>% 
+CA_flu_merge_county <- CA_flu_merge %>% 
   group_by(county) %>% 
+  summarize(susceptible = sum(susceptible),
+            new_infected = sum(new_infected), 
+            current_infected = sum(current_infected), 
+            new_severe = sum(new_severe), 
+            cumulative_severe = sum(cumulative_severe))
+
+CA_flu_merge_age <- CA_flu_merge %>% 
+  group_by(age_category) %>% 
   summarize(susceptible = sum(susceptible),
             new_infected = sum(new_infected), 
             current_infected = sum(current_infected), 
