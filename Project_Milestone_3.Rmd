@@ -5,7 +5,6 @@ output: html_notebook
 
 Authors: Katherine Nazarian, Kimberly Michel
 
-
 ```{r}
 library(readr)
 CA_flu <- read_csv("CA_flu.csv")
@@ -81,3 +80,13 @@ The preview shows you a rendered HTML copy of the contents of the editor. Conseq
 ```{r}
 
 ```
+Flu morbidity datasets (from CA and LA County)
+  Recode column names, values, or formats that are in discordant (dates, etc)
+  Combine morbidity datasets into a single dataset
+  Select demographic and geographic strata (s) of interest
+  Aggregate the data into a new dataframe to  include only one row per strata of     interest
+Vaccination dataset 
+  Recode values to be consistent with morbidity datasets so they can be joined
+  Select vaccination time frame that fits best with morbidity data and subset        appropriately
+  Select demographic strata(s) of interest
+  Create a vaccination rate metric and summarize to include only one row per strata   of interest
