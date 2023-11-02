@@ -7,6 +7,9 @@ Authors: Katherine Nazarian, Kimberly Michel
 
 ```{r}
 library(readr)
+library(tidyverse)
+library(dplyr)
+
 CA_flu <- read_csv("CA_flu.csv")
 View(CA_flu)
 LACounty_flu <- read_csv("LACounty_flu.csv")
@@ -17,12 +20,26 @@ View(ca_vax)
 ```
 
 ## Subset rows or columns, as needed
-
+rename 
 ```{r}
+LACounty_1 <- LACounty_flu %>% 
+  rename("current_infected" = infected_current) %>%
+  rename("new_recovered" = recovered_new) %>% 
+  rename("new_infected" = dx_new) %>% 
+  rename("cumulative_infected" = infected_cum) %>% 
+  rename("cumulative_recovered" = recovered_cum) %>% 
+  rename("new_severe" = severe_new) %>% 
+  rename("cumulative_severe" = severe_cum) %>% 
+  select(-race_eth, -dt_report, -date)
+
+CA_flu1 <- CA_flu %>% 
+  rename("susceptible" = count_susceptible) %>% 
+  rename("new_infected" = new_infections) %>% 
+  rename("age_category" = age_cat) %>% 
+  select(-time_int, -race_ethnicity, -report_date, -dt_diagnosis, -pop, -new_unrecovered, -cumulative_unrecovered)
 #can get rid of county_type in ca_vax (only 1) 
 #can get rid of dt_report in LACounty_flu (only 1)
 
-unique(ca_vax$county_type)
 ```
 
 ## Create new variables needed for analysis (minimum 2)
@@ -50,6 +67,20 @@ Examples Recode invalid values, Handle missing data, Recode categories
 (aggregated/summarized and/or pivoted)
 
 ```{r}
+#LACounty_flu <- LACounty_flu %>% 
+  #add_column(county = "LA County")
+
+CA_flu_merge <- merge(x = CA_flu1, y = LACounty_1, by = c("county", "age_category", "sex", "new_infected", "new_recovered", "susceptible", "current_infected", "cumulative_infected", "cumulative_recovered", "new_severe", "cumulative_severe"), all = TRUE)
+
+CA_flu_merge_1 <- CA_flu_merge %>% 
+  group_by(county) %>% 
+  summarize(susceptible = sum(susceptible),
+            new_infected = sum(new_infected), 
+            current_infected = sum(current_infected), 
+            new_severe = sum(new_severe), 
+            cumulative_severe = sum(cumulative_severe))
+```
+
 
 ```
 
@@ -81,10 +112,10 @@ The preview shows you a rendered HTML copy of the contents of the editor. Conseq
 
 ```
 Flu morbidity datasets (from CA and LA County)
-  Recode column names, values, or formats that are in discordant (dates, etc)
-  Combine morbidity datasets into a single dataset
-  Select demographic and geographic strata (s) of interest
-  Aggregate the data into a new dataframe to  include only one row per strata of     interest
+  Recode column names, values, or formats that are in discordant (dates, etc)DONE 
+  Combine morbidity datasets into a single dataset DONE
+  Select demographic and geographic strata (s) of interest DONE
+  Aggregate the data into a new dataframe to  include only one row per strata of     interest DONE
 Vaccination dataset 
   Recode values to be consistent with morbidity datasets so they can be joined
   Select vaccination time frame that fits best with morbidity data and subset        appropriately

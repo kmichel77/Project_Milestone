@@ -1755,28 +1755,93 @@ display: none;
 <p>Authors: Katherine Nazarian, Kimberly Michel</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZWFkcilcbkNBX2ZsdSA8LSByZWFkX2NzdihcIkNBX2ZsdS5jc3ZcIilcblZpZXcoQ0FfZmx1KVxuTEFDb3VudHlfZmx1IDwtIHJlYWRfY3N2KFwiTEFDb3VudHlfZmx1LmNzdlwiKVxuVmlldyhMQUNvdW50eV9mbHUpXG5jYV92YXggPC0gcmVhZF9jc3YoXCJjYV92YXguY3N2XCIpXG5WaWV3KGNhX3ZheClcblxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZWFkcilcbmxpYnJhcnkodGlkeXZlcnNlKVxuYGBgIn0= -->
 <pre class="r"><code>library(readr)
-CA_flu &lt;- read_csv(&quot;CA_flu.csv&quot;)
-View(CA_flu)
-LACounty_flu &lt;- read_csv(&quot;LACounty_flu.csv&quot;)
-View(LACounty_flu)
-ca_vax &lt;- read_csv(&quot;ca_vax.csv&quot;)
-View(ca_vax)
+library(tidyverse)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoi4pSA4pSAIEF0dGFjaGluZyBjb3JlIHRpZHl2ZXJzZSBwYWNrYWdlcyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAgdGlkeXZlcnNlIDIuMC4wIOKUgOKUgFxu4pyUIGRwbHlyICAgICAxLjEuMiAgICAg4pyUIHB1cnJyICAgICAxLjAuMlxu4pyUIGZvcmNhdHMgICAxLjAuMCAgICAg4pyUIHN0cmluZ3IgICAxLjUuMFxu4pyUIGdncGxvdDIgICAzLjQuMiAgICAg4pyUIHRpYmJsZSAgICAzLjIuMVxu4pyUIGx1YnJpZGF0ZSAxLjkuMiAgICAg4pyUIHRpZHlyICAgICAxLjMuMOKUgOKUgCBDb25mbGljdHMg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSAIHRpZHl2ZXJzZV9jb25mbGljdHMoKSDilIDilIBcbuKcliBkcGx5cjo6ZmlsdGVyKCkgbWFza3Mgc3RhdHM6OmZpbHRlcigpXG7inJYgZHBseXI6OmxhZygpICAgIG1hc2tzIHN0YXRzOjpsYWcoKVxu4oS5IFVzZSB0aGUgXHUwMDFiXTg7O2h0dHA6Ly9jb25mbGljdGVkLnItbGliLm9yZy9cdTAwMDdjb25mbGljdGVkIHBhY2thZ2VcdTAwMWJdODs7XHUwMDA3IHRvIGZvcmNlIGFsbCBjb25mbGljdHMgdG8gYmVjb21lIGVycm9yc1xuIn0= -->
+<pre><code>── Attaching core tidyverse packages ──────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ purrr     1.0.2
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0── Conflicts ────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the ]8;;http://conflicted.r-lib.org/conflicted package]8;; to force all conflicts to become errors</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShkcGx5cilcblxuQ0FfZmx1IDwtIHJlYWRfY3N2KFwiQ0FfZmx1LmNzdlwiKVxuYGBgIn0= -->
+<pre class="r"><code>library(dplyr)
+
+CA_flu &lt;- read_csv(&quot;CA_flu.csv&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUm93czogMTE0OTEyIENvbHVtbnM6IDE44pSA4pSAIENvbHVtbiBzcGVjaWZpY2F0aW9uIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgFxuRGVsaW1pdGVyOiBcIixcIlxuY2hyICAgKDMpOiBjb3VudHksIGFnZV9jYXQsIHNleFxuZGJsICAoMTMpOiB0aW1lX2ludCwgbmV3X2luZmVjdGlvbnMsIG5ld19yZWNvdmVyZWQsIGNvdW50X3N1c2NlcHRpYmxlLCBjLi4uXG5kYXRlICAoMik6IHJlcG9ydF9kYXRlLCBkdF9kaWFnbm9zaXNcbuKEuSBVc2UgYHNwZWMoKWAgdG8gcmV0cmlldmUgdGhlIGZ1bGwgY29sdW1uIHNwZWNpZmljYXRpb24gZm9yIHRoaXMgZGF0YS5cbuKEuSBTcGVjaWZ5IHRoZSBjb2x1bW4gdHlwZXMgb3Igc2V0IGBzaG93X2NvbF90eXBlcyA9IEZBTFNFYCB0byBxdWlldCB0aGlzIG1lc3NhZ2UuXG4ifQ== -->
+<pre><code>Rows: 114912 Columns: 18── Column specification ────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr   (3): county, age_cat, sex
+dbl  (13): time_int, new_infections, new_recovered, count_susceptible, c...
+date  (2): report_date, dt_diagnosis
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuVmlldyhDQV9mbHUpXG5MQUNvdW50eV9mbHUgPC0gcmVhZF9jc3YoXCJMQUNvdW50eV9mbHUuY3N2XCIpXG5gYGAifQ== -->
+<pre class="r"><code>View(CA_flu)
+LACounty_flu &lt;- read_csv(&quot;LACounty_flu.csv&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUm93czogMjAxNiBDb2x1bW5zOiAxM+KUgOKUgCBDb2x1bW4gc3BlY2lmaWNhdGlvbiDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIBcbkRlbGltaXRlcjogXCIsXCJcbmNociAgKDMpOiBhZ2VfY2F0ZWdvcnksIHNleCwgcmFjZV9ldGhcbmRibCAgKDgpOiBkeF9uZXcsIHJlY292ZXJlZF9uZXcsIGluZmVjdGVkX2N1cnJlbnQsIGluZmVjdGVkX2N1bSwgcmVjb3Zlci4uLlxubGdsICAoMSk6IGR0X3JlcG9ydFxuZGF0ZSAoMSk6IGRhdGVcbuKEuSBVc2UgYHNwZWMoKWAgdG8gcmV0cmlldmUgdGhlIGZ1bGwgY29sdW1uIHNwZWNpZmljYXRpb24gZm9yIHRoaXMgZGF0YS5cbuKEuSBTcGVjaWZ5IHRoZSBjb2x1bW4gdHlwZXMgb3Igc2V0IGBzaG93X2NvbF90eXBlcyA9IEZBTFNFYCB0byBxdWlldCB0aGlzIG1lc3NhZ2UuXG4ifQ== -->
+<pre><code>Rows: 2016 Columns: 13── Column specification ────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr  (3): age_category, sex, race_eth
+dbl  (8): dx_new, recovered_new, infected_current, infected_cum, recover...
+lgl  (1): dt_report
+date (1): date
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuVmlldyhMQUNvdW50eV9mbHUpXG5jYV92YXggPC0gcmVhZF9jc3YoXCJjYV92YXguY3N2XCIpXG5gYGAifQ== -->
+<pre class="r"><code>View(LACounty_flu)
+ca_vax &lt;- read_csv(&quot;ca_vax.csv&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUm93czogMTM1MzMgQ29sdW1uczogMTPilIDilIAgQ29sdW1uIHNwZWNpZmljYXRpb24g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSAXG5EZWxpbWl0ZXI6IFwiLFwiXG5jaHIgICg0KTogY291bnR5X25hbWUsIGNvdW50eV90eXBlLCBkZW1vZ3JhcGhpY19jYXRlZ29yeSwgZGVtb2dyYXBoaWNfdmFsdWVcbmRibCAgKDYpOiBlc3RfcG9wdWxhdGlvbiwgdG90YWxfcGFydGlhbF92YXgsIGN1bV9mdWxseV92YXgsIGN1bV9hdGxlYXN0Xy4uLlxubGdsICAoMSk6IHN1cHByZXNzX2RhdGFcbmRhdGUgKDIpOiBkYXRlX2FkbWluLCBxdWFydGVyXG7ihLkgVXNlIGBzcGVjKClgIHRvIHJldHJpZXZlIHRoZSBmdWxsIGNvbHVtbiBzcGVjaWZpY2F0aW9uIGZvciB0aGlzIGRhdGEuXG7ihLkgU3BlY2lmeSB0aGUgY29sdW1uIHR5cGVzIG9yIHNldCBgc2hvd19jb2xfdHlwZXMgPSBGQUxTRWAgdG8gcXVpZXQgdGhpcyBtZXNzYWdlLlxuIn0= -->
+<pre><code>Rows: 13533 Columns: 13── Column specification ────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr  (4): county_name, county_type, demographic_category, demographic_value
+dbl  (6): est_population, total_partial_vax, cum_fully_vax, cum_atleast_...
+lgl  (1): suppress_data
+date (2): date_admin, quarter
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuVmlldyhjYV92YXgpXG5cbmBgYCJ9 -->
+<pre class="r"><code>View(ca_vax)
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <div id="subset-rows-or-columns-as-needed" class="section level2">
 <h2>Subset rows or columns, as needed</h2>
+<p>rename</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudW5pcXVlKGNhX3ZheCRjb3VudHlfdHlwZSlcbmBgYCJ9 -->
-<pre class="r"><code>unique(ca_vax$county_type)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTEFDb3VudHlfMSA8LSBMQUNvdW50eV9mbHUgJT4lIFxuICByZW5hbWUoXCJjdXJyZW50X2luZmVjdGVkXCIgPSBpbmZlY3RlZF9jdXJyZW50KSAlPiVcbiAgcmVuYW1lKFwibmV3X3JlY292ZXJlZFwiID0gcmVjb3ZlcmVkX25ldykgJT4lIFxuICByZW5hbWUoXCJuZXdfaW5mZWN0ZWRcIiA9IGR4X25ldykgJT4lIFxuICByZW5hbWUoXCJjdW11bGF0aXZlX2luZmVjdGVkXCIgPSBpbmZlY3RlZF9jdW0pICU+JSBcbiAgcmVuYW1lKFwiY3VtdWxhdGl2ZV9yZWNvdmVyZWRcIiA9IHJlY292ZXJlZF9jdW0pICU+JSBcbiAgcmVuYW1lKFwibmV3X3NldmVyZVwiID0gc2V2ZXJlX25ldykgJT4lIFxuICByZW5hbWUoXCJjdW11bGF0aXZlX3NldmVyZVwiID0gc2V2ZXJlX2N1bSkgJT4lIFxuICBzZWxlY3QoLXJhY2VfZXRoLCAtZHRfcmVwb3J0LCAtZGF0ZSlcblxuQ0FfZmx1MSA8LSBDQV9mbHUgJT4lIFxuICByZW5hbWUoXCJzdXNjZXB0aWJsZVwiID0gY291bnRfc3VzY2VwdGlibGUpICU+JSBcbiAgcmVuYW1lKFwibmV3X2luZmVjdGVkXCIgPSBuZXdfaW5mZWN0aW9ucykgJT4lIFxuICByZW5hbWUoXCJhZ2VfY2F0ZWdvcnlcIiA9IGFnZV9jYXQpICU+JSBcbiAgc2VsZWN0KC10aW1lX2ludCwgLXJhY2VfZXRobmljaXR5LCAtcmVwb3J0X2RhdGUsIC1kdF9kaWFnbm9zaXMsIC1wb3AsIC1uZXdfdW5yZWNvdmVyZWQsIC1jdW11bGF0aXZlX3VucmVjb3ZlcmVkKVxuI2NhbiBnZXQgcmlkIG9mIGNvdW50eV90eXBlIGluIGNhX3ZheCAob25seSAxKSBcbiNjYW4gZ2V0IHJpZCBvZiBkdF9yZXBvcnQgaW4gTEFDb3VudHlfZmx1IChvbmx5IDEpXG5cbmBgYCJ9 -->
+<pre class="r"><code>LACounty_1 &lt;- LACounty_flu %&gt;% 
+  rename(&quot;current_infected&quot; = infected_current) %&gt;%
+  rename(&quot;new_recovered&quot; = recovered_new) %&gt;% 
+  rename(&quot;new_infected&quot; = dx_new) %&gt;% 
+  rename(&quot;cumulative_infected&quot; = infected_cum) %&gt;% 
+  rename(&quot;cumulative_recovered&quot; = recovered_cum) %&gt;% 
+  rename(&quot;new_severe&quot; = severe_new) %&gt;% 
+  rename(&quot;cumulative_severe&quot; = severe_cum) %&gt;% 
+  select(-race_eth, -dt_report, -date)
+
+CA_flu1 &lt;- CA_flu %&gt;% 
+  rename(&quot;susceptible&quot; = count_susceptible) %&gt;% 
+  rename(&quot;new_infected&quot; = new_infections) %&gt;% 
+  rename(&quot;age_category&quot; = age_cat) %&gt;% 
+  select(-time_int, -race_ethnicity, -report_date, -dt_diagnosis, -pop, -new_unrecovered, -cumulative_unrecovered)
+#can get rid of county_type in ca_vax (only 1) 
+#can get rid of dt_report in LACounty_flu (only 1)
+</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiTUlYRURcIlxuIn0= -->
-<pre><code>[1] &quot;MIXED&quot;</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -1812,25 +1877,54 @@ categories</p>
 <p>(aggregated/summarized and/or pivoted)</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI0xBQ291bnR5X2ZsdSA8LSBMQUNvdW50eV9mbHUgJT4lIFxuICAjYWRkX2NvbHVtbihjb3VudHkgPSBcIkxBIENvdW50eVwiKVxuXG5DQV9mbHVfbWVyZ2UgPC0gbWVyZ2UoeCA9IENBX2ZsdTEsIHkgPSBMQUNvdW50eV8xLCBieSA9IGMoXCJjb3VudHlcIiwgXCJhZ2VfY2F0ZWdvcnlcIiwgXCJzZXhcIiwgXCJuZXdfaW5mZWN0ZWRcIiwgXCJuZXdfcmVjb3ZlcmVkXCIsIFwic3VzY2VwdGlibGVcIiwgXCJjdXJyZW50X2luZmVjdGVkXCIsIFwiY3VtdWxhdGl2ZV9pbmZlY3RlZFwiLCBcImN1bXVsYXRpdmVfcmVjb3ZlcmVkXCIsIFwibmV3X3NldmVyZVwiLCBcImN1bXVsYXRpdmVfc2V2ZXJlXCIpLCBhbGwgPSBUUlVFKVxuXG5DQV9mbHVfbWVyZ2VfMSA8LSBDQV9mbHVfbWVyZ2UgJT4lIFxuICBncm91cF9ieShjb3VudHkpICU+JSBcbiAgc3VtbWFyaXplKHN1c2NlcHRpYmxlID0gc3VtKHN1c2NlcHRpYmxlKSxcbiAgICAgICAgICAgIG5ld19pbmZlY3RlZCA9IHN1bShuZXdfaW5mZWN0ZWQpLCBcbiAgICAgICAgICAgIGN1cnJlbnRfaW5mZWN0ZWQgPSBzdW0oY3VycmVudF9pbmZlY3RlZCksIFxuICAgICAgICAgICAgbmV3X3NldmVyZSA9IHN1bShuZXdfc2V2ZXJlKSwgXG4gICAgICAgICAgICBjdW11bGF0aXZlX3NldmVyZSA9IHN1bShjdW11bGF0aXZlX3NldmVyZSkpXG5gYGAifQ== -->
+<pre class="r"><code>#LACounty_flu &lt;- LACounty_flu %&gt;% 
+  #add_column(county = &quot;LA County&quot;)
+
+CA_flu_merge &lt;- merge(x = CA_flu1, y = LACounty_1, by = c(&quot;county&quot;, &quot;age_category&quot;, &quot;sex&quot;, &quot;new_infected&quot;, &quot;new_recovered&quot;, &quot;susceptible&quot;, &quot;current_infected&quot;, &quot;cumulative_infected&quot;, &quot;cumulative_recovered&quot;, &quot;new_severe&quot;, &quot;cumulative_severe&quot;), all = TRUE)
+
+CA_flu_merge_1 &lt;- CA_flu_merge %&gt;% 
+  group_by(county) %&gt;% 
+  summarize(susceptible = sum(susceptible),
+            new_infected = sum(new_infected), 
+            current_infected = sum(current_infected), 
+            new_severe = sum(new_severe), 
+            cumulative_severe = sum(cumulative_severe))</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-</div>
-<div id="data-dictionary-based-on-clean-dataset-minimum-4-data-elements-including" class="section level2">
-<h2>Data dictionary based on clean dataset (minimum 4 data elements),
-including:</h2>
-<p>Variable name, Data type, Description</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="one-or-more-tables-with-descriptive-statistics-for-4-data-elements" class="section level2">
-<h2>One or more tables with descriptive statistics for 4 data
-elements</h2>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3dlJ2xsIG1ha2UgYSBnZ3Bsb3QgYXQgc29tZSBwb2ludCBcbmBgYCJ9 -->
-<pre class="r"><code>#we&#39;ll make a ggplot at some point </code></pre>
+<pre><code>
+## Data dictionary based on clean dataset (minimum 4 data elements), including:
+
+Variable name, Data type, Description
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+## One or more tables with descriptive statistics for 4 data elements
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3dlJ2xsIG1ha2UgYSBnZ3Bsb3QgYXQgc29tZSBwb2ludCBcbmBgYCJ9 --&gt;
+
+```r
+#we&#39;ll make a ggplot at some point </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1853,19 +1947,19 @@ run in the editor is displayed.</p>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Flu morbidity datasets (from CA and LA County) Recode column names,
-values, or formats that are in discordant (dates, etc) Combine morbidity
-datasets into a single dataset Select demographic and geographic strata
-(s) of interest Aggregate the data into a new dataframe to include only
-one row per strata of interest Vaccination dataset Recode values to be
-consistent with morbidity datasets so they can be joined Select
-vaccination time frame that fits best with morbidity data and subset
-appropriately Select demographic strata(s) of interest Create a
-vaccination rate metric and summarize to include only one row per strata
-of interest</p>
+values, or formats that are in discordant (dates, etc)DONE Combine
+morbidity datasets into a single dataset DONE Select demographic and
+geographic strata (s) of interest DONE Aggregate the data into a new
+dataframe to include only one row per strata of interest DONE
+Vaccination dataset Recode values to be consistent with morbidity
+datasets so they can be joined Select vaccination time frame that fits
+best with morbidity data and subset appropriately Select demographic
+strata(s) of interest Create a vaccination rate metric and summarize to
+include only one row per strata of interest</p>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUHJvamVjdCBNaWxlc3RvbmUgMyIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKQXV0aG9yczogS2F0aGVyaW5lIE5hemFyaWFuLCBLaW1iZXJseSBNaWNoZWwKCmBgYHtyfQpsaWJyYXJ5KHJlYWRyKQpDQV9mbHUgPC0gcmVhZF9jc3YoIkNBX2ZsdS5jc3YiKQpWaWV3KENBX2ZsdSkKTEFDb3VudHlfZmx1IDwtIHJlYWRfY3N2KCJMQUNvdW50eV9mbHUuY3N2IikKVmlldyhMQUNvdW50eV9mbHUpCmNhX3ZheCA8LSByZWFkX2NzdigiY2FfdmF4LmNzdiIpClZpZXcoY2FfdmF4KQoKYGBgCgojIyBTdWJzZXQgcm93cyBvciBjb2x1bW5zLCBhcyBuZWVkZWQKCmBgYHtyfQojY2FuIGdldCByaWQgb2YgY291bnR5X3R5cGUgaW4gY2FfdmF4IChvbmx5IDEpIAojY2FuIGdldCByaWQgb2YgZHRfcmVwb3J0IGluIExBQ291bnR5X2ZsdSAob25seSAxKQoKdW5pcXVlKGNhX3ZheCRjb3VudHlfdHlwZSkKYGBgCgojIyBDcmVhdGUgbmV3IHZhcmlhYmxlcyBuZWVkZWQgZm9yIGFuYWx5c2lzIChtaW5pbXVtIDIpCgpOZXcgdmFyaWFibGVzIHNob3VsZCBiZSBjcmVhdGVkIGJhc2VkIG9uIGV4aXN0aW5nIGNvbHVtbnM7IGZvciBleGFtcGxlIENhbGN1bGF0aW5nIGEgcmF0ZSwgQ29tYmluaW5nIGNoYXJhY3RlciBzdHJpbmdzLCBBZ2dyZWdhdGlvbgoKYGBge3J9CiNmb3IgY2FfdmF4IHJhdGUgd2UgY2FuIGNhbGN1bGF0ZSB2YXggcmF0ZXMgdXNpbmcgY3VtX2Z1bGx5X3ZheC9lc3RfcG9wdWxhdGlvbiwgYnV0IHdlIHdvdWxkIGhhdmUgdG8gcmVtb3ZlIHRoZSBOQSB2YWx1ZXMgCgojZm9yIENBX2ZsdSB3ZSBjYW4gY2FsY3VsYXRlIHJhdGUgb2YgaW5mZWN0aW9ucy9wb3B1bGF0aW9ucyAKCgpgYGAKCiMjIENsZWFuIHZhcmlhYmxlcyBuZWVkZWQgZm9yIGFuYWx5c2lzIChtaW5pbXVtIDIpCgpFeGFtcGxlcyBSZWNvZGUgaW52YWxpZCB2YWx1ZXMsIEhhbmRsZSBtaXNzaW5nIGRhdGEsIFJlY29kZSBjYXRlZ29yaWVzCgpgYGB7cn0KI3JlY29kZS9yZW1vdmUgTkEgdmFsdWVzIApgYGAKCiMjIERhdGEgcmUtc3RydWN0dXJlZCBhcyBuZWVkZWQKCihhZ2dyZWdhdGVkL3N1bW1hcml6ZWQgYW5kL29yIHBpdm90ZWQpCgpgYGB7cn0KCmBgYAoKIyMgRGF0YSBkaWN0aW9uYXJ5IGJhc2VkIG9uIGNsZWFuIGRhdGFzZXQgKG1pbmltdW0gNCBkYXRhIGVsZW1lbnRzKSwgaW5jbHVkaW5nOgoKVmFyaWFibGUgbmFtZSwgRGF0YSB0eXBlLCBEZXNjcmlwdGlvbgoKYGBge3J9CgpgYGAKCiMjIE9uZSBvciBtb3JlIHRhYmxlcyB3aXRoIGRlc2NyaXB0aXZlIHN0YXRpc3RpY3MgZm9yIDQgZGF0YSBlbGVtZW50cwoKYGBge3J9CiN3ZSdsbCBtYWtlIGEgZ2dwbG90IGF0IHNvbWUgcG9pbnQgCmBgYAoKIyMgSHRtbCBvdXRwdXQgdGhhdCBpcyBwcm9mZXNzaW9uYWxseSBwcmVwYXJlZCBmb3IgcHJlc2VudGF0aW9uCgpPbmx5IHRoZSBuZWNlc3NhcnkgaW5mb3JtYXRpb24gaXMgb3V0cHV0dGVkICh5b3Ugc2hvdWxkIHN1cHByZXNzLCBmb3IgZXhhbXBsZSwgZW50aXJlIGRhdGEgZnJhbWUgb3V0cHV0cykgVXNlIG9mIGhlYWRlcnMgYW5kIHN1YiBoZWFkZXJzIHRvIGNyZWF0ZSBhbiBvcmdhbml6ZWQgZG9jdW1lbnQKCmBgYHtyfQoKYGBgCgpUaGUgcHJldmlldyBzaG93cyB5b3UgYSByZW5kZXJlZCBIVE1MIGNvcHkgb2YgdGhlIGNvbnRlbnRzIG9mIHRoZSBlZGl0b3IuIENvbnNlcXVlbnRseSwgdW5saWtlICpLbml0KiwgKlByZXZpZXcqIGRvZXMgbm90IHJ1biBhbnkgUiBjb2RlIGNodW5rcy4gSW5zdGVhZCwgdGhlIG91dHB1dCBvZiB0aGUgY2h1bmsgd2hlbiBpdCB3YXMgbGFzdCBydW4gaW4gdGhlIGVkaXRvciBpcyBkaXNwbGF5ZWQuCgpgYGB7cn0KCmBgYApGbHUgbW9yYmlkaXR5IGRhdGFzZXRzIChmcm9tIENBIGFuZCBMQSBDb3VudHkpCiAgUmVjb2RlIGNvbHVtbiBuYW1lcywgdmFsdWVzLCBvciBmb3JtYXRzIHRoYXQgYXJlIGluIGRpc2NvcmRhbnQgKGRhdGVzLCBldGMpCiAgQ29tYmluZSBtb3JiaWRpdHkgZGF0YXNldHMgaW50byBhIHNpbmdsZSBkYXRhc2V0CiAgU2VsZWN0IGRlbW9ncmFwaGljIGFuZCBnZW9ncmFwaGljIHN0cmF0YSAocykgb2YgaW50ZXJlc3QKICBBZ2dyZWdhdGUgdGhlIGRhdGEgaW50byBhIG5ldyBkYXRhZnJhbWUgdG8gIGluY2x1ZGUgb25seSBvbmUgcm93IHBlciBzdHJhdGEgb2YgICAgIGludGVyZXN0ClZhY2NpbmF0aW9uIGRhdGFzZXQgCiAgUmVjb2RlIHZhbHVlcyB0byBiZSBjb25zaXN0ZW50IHdpdGggbW9yYmlkaXR5IGRhdGFzZXRzIHNvIHRoZXkgY2FuIGJlIGpvaW5lZAogIFNlbGVjdCB2YWNjaW5hdGlvbiB0aW1lIGZyYW1lIHRoYXQgZml0cyBiZXN0IHdpdGggbW9yYmlkaXR5IGRhdGEgYW5kIHN1YnNldCAgICAgICAgYXBwcm9wcmlhdGVseQogIFNlbGVjdCBkZW1vZ3JhcGhpYyBzdHJhdGEocykgb2YgaW50ZXJlc3QKICBDcmVhdGUgYSB2YWNjaW5hdGlvbiByYXRlIG1ldHJpYyBhbmQgc3VtbWFyaXplIHRvIGluY2x1ZGUgb25seSBvbmUgcm93IHBlciBzdHJhdGEgICBvZiBpbnRlcmVzdA==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUHJvamVjdCBNaWxlc3RvbmUgMyIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKQXV0aG9yczogS2F0aGVyaW5lIE5hemFyaWFuLCBLaW1iZXJseSBNaWNoZWwKCmBgYHtyfQpsaWJyYXJ5KHJlYWRyKQpsaWJyYXJ5KHRpZHl2ZXJzZSkKbGlicmFyeShkcGx5cikKCkNBX2ZsdSA8LSByZWFkX2NzdigiQ0FfZmx1LmNzdiIpClZpZXcoQ0FfZmx1KQpMQUNvdW50eV9mbHUgPC0gcmVhZF9jc3YoIkxBQ291bnR5X2ZsdS5jc3YiKQpWaWV3KExBQ291bnR5X2ZsdSkKY2FfdmF4IDwtIHJlYWRfY3N2KCJjYV92YXguY3N2IikKVmlldyhjYV92YXgpCgpgYGAKCiMjIFN1YnNldCByb3dzIG9yIGNvbHVtbnMsIGFzIG5lZWRlZApyZW5hbWUgCmBgYHtyfQpMQUNvdW50eV8xIDwtIExBQ291bnR5X2ZsdSAlPiUgCiAgcmVuYW1lKCJjdXJyZW50X2luZmVjdGVkIiA9IGluZmVjdGVkX2N1cnJlbnQpICU+JQogIHJlbmFtZSgibmV3X3JlY292ZXJlZCIgPSByZWNvdmVyZWRfbmV3KSAlPiUgCiAgcmVuYW1lKCJuZXdfaW5mZWN0ZWQiID0gZHhfbmV3KSAlPiUgCiAgcmVuYW1lKCJjdW11bGF0aXZlX2luZmVjdGVkIiA9IGluZmVjdGVkX2N1bSkgJT4lIAogIHJlbmFtZSgiY3VtdWxhdGl2ZV9yZWNvdmVyZWQiID0gcmVjb3ZlcmVkX2N1bSkgJT4lIAogIHJlbmFtZSgibmV3X3NldmVyZSIgPSBzZXZlcmVfbmV3KSAlPiUgCiAgcmVuYW1lKCJjdW11bGF0aXZlX3NldmVyZSIgPSBzZXZlcmVfY3VtKSAlPiUgCiAgc2VsZWN0KC1yYWNlX2V0aCwgLWR0X3JlcG9ydCwgLWRhdGUpCgpDQV9mbHUxIDwtIENBX2ZsdSAlPiUgCiAgcmVuYW1lKCJzdXNjZXB0aWJsZSIgPSBjb3VudF9zdXNjZXB0aWJsZSkgJT4lIAogIHJlbmFtZSgibmV3X2luZmVjdGVkIiA9IG5ld19pbmZlY3Rpb25zKSAlPiUgCiAgcmVuYW1lKCJhZ2VfY2F0ZWdvcnkiID0gYWdlX2NhdCkgJT4lIAogIHNlbGVjdCgtdGltZV9pbnQsIC1yYWNlX2V0aG5pY2l0eSwgLXJlcG9ydF9kYXRlLCAtZHRfZGlhZ25vc2lzLCAtcG9wLCAtbmV3X3VucmVjb3ZlcmVkLCAtY3VtdWxhdGl2ZV91bnJlY292ZXJlZCkKI2NhbiBnZXQgcmlkIG9mIGNvdW50eV90eXBlIGluIGNhX3ZheCAob25seSAxKSAKI2NhbiBnZXQgcmlkIG9mIGR0X3JlcG9ydCBpbiBMQUNvdW50eV9mbHUgKG9ubHkgMSkKCmBgYAoKIyMgQ3JlYXRlIG5ldyB2YXJpYWJsZXMgbmVlZGVkIGZvciBhbmFseXNpcyAobWluaW11bSAyKQoKTmV3IHZhcmlhYmxlcyBzaG91bGQgYmUgY3JlYXRlZCBiYXNlZCBvbiBleGlzdGluZyBjb2x1bW5zOyBmb3IgZXhhbXBsZSBDYWxjdWxhdGluZyBhIHJhdGUsIENvbWJpbmluZyBjaGFyYWN0ZXIgc3RyaW5ncywgQWdncmVnYXRpb24KCmBgYHtyfQojZm9yIGNhX3ZheCByYXRlIHdlIGNhbiBjYWxjdWxhdGUgdmF4IHJhdGVzIHVzaW5nIGN1bV9mdWxseV92YXgvZXN0X3BvcHVsYXRpb24sIGJ1dCB3ZSB3b3VsZCBoYXZlIHRvIHJlbW92ZSB0aGUgTkEgdmFsdWVzIAoKI2ZvciBDQV9mbHUgd2UgY2FuIGNhbGN1bGF0ZSByYXRlIG9mIGluZmVjdGlvbnMvcG9wdWxhdGlvbnMgCgoKYGBgCgojIyBDbGVhbiB2YXJpYWJsZXMgbmVlZGVkIGZvciBhbmFseXNpcyAobWluaW11bSAyKQoKRXhhbXBsZXMgUmVjb2RlIGludmFsaWQgdmFsdWVzLCBIYW5kbGUgbWlzc2luZyBkYXRhLCBSZWNvZGUgY2F0ZWdvcmllcwoKYGBge3J9CiNyZWNvZGUvcmVtb3ZlIE5BIHZhbHVlcyAKYGBgCgojIyBEYXRhIHJlLXN0cnVjdHVyZWQgYXMgbmVlZGVkCgooYWdncmVnYXRlZC9zdW1tYXJpemVkIGFuZC9vciBwaXZvdGVkKQoKYGBge3J9CiNMQUNvdW50eV9mbHUgPC0gTEFDb3VudHlfZmx1ICU+JSAKICAjYWRkX2NvbHVtbihjb3VudHkgPSAiTEEgQ291bnR5IikKCkNBX2ZsdV9tZXJnZSA8LSBtZXJnZSh4ID0gQ0FfZmx1MSwgeSA9IExBQ291bnR5XzEsIGJ5ID0gYygiY291bnR5IiwgImFnZV9jYXRlZ29yeSIsICJzZXgiLCAibmV3X2luZmVjdGVkIiwgIm5ld19yZWNvdmVyZWQiLCAic3VzY2VwdGlibGUiLCAiY3VycmVudF9pbmZlY3RlZCIsICJjdW11bGF0aXZlX2luZmVjdGVkIiwgImN1bXVsYXRpdmVfcmVjb3ZlcmVkIiwgIm5ld19zZXZlcmUiLCAiY3VtdWxhdGl2ZV9zZXZlcmUiKSwgYWxsID0gVFJVRSkKCkNBX2ZsdV9tZXJnZV8xIDwtIENBX2ZsdV9tZXJnZSAlPiUgCiAgZ3JvdXBfYnkoY291bnR5KSAlPiUgCiAgc3VtbWFyaXplKHN1c2NlcHRpYmxlID0gc3VtKHN1c2NlcHRpYmxlKSwKICAgICAgICAgICAgbmV3X2luZmVjdGVkID0gc3VtKG5ld19pbmZlY3RlZCksIAogICAgICAgICAgICBjdXJyZW50X2luZmVjdGVkID0gc3VtKGN1cnJlbnRfaW5mZWN0ZWQpLCAKICAgICAgICAgICAgbmV3X3NldmVyZSA9IHN1bShuZXdfc2V2ZXJlKSwgCiAgICAgICAgICAgIGN1bXVsYXRpdmVfc2V2ZXJlID0gc3VtKGN1bXVsYXRpdmVfc2V2ZXJlKSkKYGBgCgoKYGBgCgojIyBEYXRhIGRpY3Rpb25hcnkgYmFzZWQgb24gY2xlYW4gZGF0YXNldCAobWluaW11bSA0IGRhdGEgZWxlbWVudHMpLCBpbmNsdWRpbmc6CgpWYXJpYWJsZSBuYW1lLCBEYXRhIHR5cGUsIERlc2NyaXB0aW9uCgpgYGB7cn0KCmBgYAoKIyMgT25lIG9yIG1vcmUgdGFibGVzIHdpdGggZGVzY3JpcHRpdmUgc3RhdGlzdGljcyBmb3IgNCBkYXRhIGVsZW1lbnRzCgpgYGB7cn0KI3dlJ2xsIG1ha2UgYSBnZ3Bsb3QgYXQgc29tZSBwb2ludCAKYGBgCgojIyBIdG1sIG91dHB1dCB0aGF0IGlzIHByb2Zlc3Npb25hbGx5IHByZXBhcmVkIGZvciBwcmVzZW50YXRpb24KCk9ubHkgdGhlIG5lY2Vzc2FyeSBpbmZvcm1hdGlvbiBpcyBvdXRwdXR0ZWQgKHlvdSBzaG91bGQgc3VwcHJlc3MsIGZvciBleGFtcGxlLCBlbnRpcmUgZGF0YSBmcmFtZSBvdXRwdXRzKSBVc2Ugb2YgaGVhZGVycyBhbmQgc3ViIGhlYWRlcnMgdG8gY3JlYXRlIGFuIG9yZ2FuaXplZCBkb2N1bWVudAoKYGBge3J9CgpgYGAKClRoZSBwcmV2aWV3IHNob3dzIHlvdSBhIHJlbmRlcmVkIEhUTUwgY29weSBvZiB0aGUgY29udGVudHMgb2YgdGhlIGVkaXRvci4gQ29uc2VxdWVudGx5LCB1bmxpa2UgKktuaXQqLCAqUHJldmlldyogZG9lcyBub3QgcnVuIGFueSBSIGNvZGUgY2h1bmtzLiBJbnN0ZWFkLCB0aGUgb3V0cHV0IG9mIHRoZSBjaHVuayB3aGVuIGl0IHdhcyBsYXN0IHJ1biBpbiB0aGUgZWRpdG9yIGlzIGRpc3BsYXllZC4KCmBgYHtyfQoKYGBgCkZsdSBtb3JiaWRpdHkgZGF0YXNldHMgKGZyb20gQ0EgYW5kIExBIENvdW50eSkKICBSZWNvZGUgY29sdW1uIG5hbWVzLCB2YWx1ZXMsIG9yIGZvcm1hdHMgdGhhdCBhcmUgaW4gZGlzY29yZGFudCAoZGF0ZXMsIGV0YylET05FIAogIENvbWJpbmUgbW9yYmlkaXR5IGRhdGFzZXRzIGludG8gYSBzaW5nbGUgZGF0YXNldCBET05FCiAgU2VsZWN0IGRlbW9ncmFwaGljIGFuZCBnZW9ncmFwaGljIHN0cmF0YSAocykgb2YgaW50ZXJlc3QgRE9ORQogIEFnZ3JlZ2F0ZSB0aGUgZGF0YSBpbnRvIGEgbmV3IGRhdGFmcmFtZSB0byAgaW5jbHVkZSBvbmx5IG9uZSByb3cgcGVyIHN0cmF0YSBvZiAgICAgaW50ZXJlc3QgRE9ORQpWYWNjaW5hdGlvbiBkYXRhc2V0IAogIFJlY29kZSB2YWx1ZXMgdG8gYmUgY29uc2lzdGVudCB3aXRoIG1vcmJpZGl0eSBkYXRhc2V0cyBzbyB0aGV5IGNhbiBiZSBqb2luZWQKICBTZWxlY3QgdmFjY2luYXRpb24gdGltZSBmcmFtZSB0aGF0IGZpdHMgYmVzdCB3aXRoIG1vcmJpZGl0eSBkYXRhIGFuZCBzdWJzZXQgICAgICAgIGFwcHJvcHJpYXRlbHkKICBTZWxlY3QgZGVtb2dyYXBoaWMgc3RyYXRhKHMpIG9mIGludGVyZXN0CiAgQ3JlYXRlIGEgdmFjY2luYXRpb24gcmF0ZSBtZXRyaWMgYW5kIHN1bW1hcml6ZSB0byBpbmNsdWRlIG9ubHkgb25lIHJvdyBwZXIgc3RyYXRhICAgb2YgaW50ZXJlc3Q=</div>
 
 
 
