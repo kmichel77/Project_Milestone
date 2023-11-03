@@ -22,6 +22,9 @@ View(ca_vax)
 ## Subset rows or columns, as needed
 rename 
 ```{r}
+#LACounty_flu <- LACounty_flu %>% 
+  #add_column(county = "LA County")
+
 LACounty_1 <- LACounty_flu %>% 
   rename("current_infected" = infected_current) %>%
   rename("new_recovered" = recovered_new) %>% 
@@ -30,16 +33,21 @@ LACounty_1 <- LACounty_flu %>%
   rename("cumulative_recovered" = recovered_cum) %>% 
   rename("new_severe" = severe_new) %>% 
   rename("cumulative_severe" = severe_cum) %>% 
-  select(-race_eth, -dt_report, -date)
+  select(-race_eth, -dt_report, -date) %>% 
+   mutate(county = word(county , 1  , -2))
 
 CA_flu1 <- CA_flu %>% 
   rename("susceptible" = count_susceptible) %>% 
   rename("new_infected" = new_infections) %>% 
   rename("age_category" = age_cat) %>% 
-  select(-time_int, -race_ethnicity, -report_date, -dt_diagnosis, -pop, -new_unrecovered, -cumulative_unrecovered)
+  select(-time_int, -race_ethnicity, -report_date, -dt_diagnosis, -pop, -new_unrecovered, -cumulative_unrecovered) %>%
+  mutate(county = word(county , 1  , -2))
 
 ca_vax1 <- ca_vax %>% 
-  select(-county_type, -suppress_data)
+  rename("county" = county_name, "susceptible" = est_population, "sex" = demographic_value) %>%
+  select(-county_type, -suppress_data, - demographic_category) %>% 
+  na.omit()
+  
 
 #can get rid of county_type in ca_vax (only 1) 
 #can get rid of dt_report in LACounty_flu (only 1)
@@ -71,8 +79,6 @@ Examples Recode invalid values, Handle missing data, Recode categories
 (aggregated/summarized and/or pivoted)
 
 ```{r}
-#LACounty_flu <- LACounty_flu %>% 
-  #add_column(county = "LA County")
 
 CA_flu_merge <- merge(x = CA_flu1, y = LACounty_1, by = c("county", "age_category", "sex", "new_infected", "new_recovered", "susceptible", "current_infected", "cumulative_infected", "cumulative_recovered", "new_severe", "cumulative_severe"), all = TRUE)
 
@@ -91,6 +97,16 @@ CA_flu_merge_age <- CA_flu_merge %>%
             current_infected = sum(current_infected), 
             new_severe = sum(new_severe), 
             cumulative_severe = sum(cumulative_severe))
+
+ca_vax_county <- ca_vax1 %>% 
+  group_by(county) %>% 
+  summarize(susceptible = sum(susceptible), 
+            cum_fully_vax = sum(cum_fully_vax), 
+            total_partial_vax = sum(total_partial_vax),
+            cum_atleast_one_dose = sum(cum_atleast_one_dose),
+            cum_unvax = sum(cum_unvax))
+
+CA_flu_vax <- merge(x = CA_flu_merge_county, y = ca_vax_county, by = "county", all = TRUE)
 ```
 
 
