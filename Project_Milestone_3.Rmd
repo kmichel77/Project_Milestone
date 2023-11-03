@@ -9,6 +9,8 @@ Authors: Katherine Nazarian, Kimberly Michel
 library(readr)
 library(tidyverse)
 library(dplyr)
+library(lubridate)
+library(zoo)
 
 CA_flu <- read_csv("CA_flu.csv")
 View(CA_flu)
@@ -33,15 +35,30 @@ LACounty_1 <- LACounty_flu %>%
   rename("cumulative_recovered" = recovered_cum) %>% 
   rename("new_severe" = severe_new) %>% 
   rename("cumulative_severe" = severe_cum) %>% 
-  select(-race_eth, -dt_report, -date) %>% 
-   mutate(county = word(county , 1  , -2))
+  select(-race_eth, -dt_report) %>% 
+   mutate(county = word(county , 1  , -2)) %>% 
+  mutate(
+    quarter = case_when(
+      date >= "2022-09-24" & date <= "2022-11-30" ~ 'Q1', 
+      date >= "2022-12-01" & date <= "2023-02-28" ~ 'Q2', 
+      date >= "2023-03-01" & date <= "2023-05-31" ~ 'Q3', 
+      date >= "2023-06-01" ~ 'Q4'))
+
+
+#LA_County_2 <- split(LACounty_1, cut(as.Date(LACounty_1$date), "quarter"))
 
 CA_flu1 <- CA_flu %>% 
   rename("susceptible" = count_susceptible) %>% 
   rename("new_infected" = new_infections) %>% 
-  rename("age_category" = age_cat) %>% 
-  select(-time_int, -race_ethnicity, -report_date, -dt_diagnosis, -pop, -new_unrecovered, -cumulative_unrecovered) %>%
-  mutate(county = word(county , 1  , -2))
+  rename("age_category" = age_cat, "date" = dt_diagnosis) %>% 
+  select(-time_int, -race_ethnicity, -report_date, -pop, -new_unrecovered, -cumulative_unrecovered) %>%
+  mutate(county = word(county , 1  , -2)) %>%
+  mutate(
+    quarter = case_when(
+      date >= "2022-09-24" & date <= "2022-11-30" ~ 'Q1', 
+      date >= "2022-12-01" & date <= "2023-02-28" ~ 'Q2', 
+      date >= "2023-03-01" & date <= "2023-05-31" ~ 'Q3', 
+      date >= "2023-06-01" ~ 'Q4'))
 
 ca_vax1 <- ca_vax %>% 
   rename("county" = county_name, "susceptible" = est_population, "sex" = demographic_value) %>%
@@ -80,10 +97,10 @@ Examples Recode invalid values, Handle missing data, Recode categories
 
 ```{r}
 
-CA_flu_merge <- merge(x = CA_flu1, y = LACounty_1, by = c("county", "age_category", "sex", "new_infected", "new_recovered", "susceptible", "current_infected", "cumulative_infected", "cumulative_recovered", "new_severe", "cumulative_severe"), all = TRUE)
+CA_flu_merge <- merge(x = CA_flu1, y = LACounty_1, by = c("county", "age_category", "quarter", "sex", "new_infected", "new_recovered", "susceptible", "current_infected", "cumulative_infected", "cumulative_recovered", "new_severe", "cumulative_severe"), all = TRUE)
 
-CA_flu_merge_county <- CA_flu_merge %>% 
-  group_by(county) %>% 
+CA_flu_merge_demo <- CA_flu_merge %>% 
+  group_by(county, age_category, quarter) %>% 
   summarize(susceptible = sum(susceptible),
             new_infected = sum(new_infected), 
             current_infected = sum(current_infected), 
