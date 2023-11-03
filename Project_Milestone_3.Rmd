@@ -115,15 +115,24 @@ CA_flu_merge_age <- CA_flu_merge %>%
             new_severe = sum(new_severe), 
             cumulative_severe = sum(cumulative_severe))
 
-ca_vax_county <- ca_vax1 %>% 
-  group_by(county) %>% 
+ca_vax2 <- ca_vax1 %>% 
+  mutate(
+    quarter = case_when(
+      quarter >= "2022-09-24" & quarter <= "2022-11-30" ~ 'Q1', 
+      quarter >= "2022-12-01" & quarter <= "2023-02-28" ~ 'Q2', 
+      quarter >= "2023-03-01" & quarter <= "2023-05-31" ~ 'Q3', 
+      quarter >= "2023-06-01" ~ 'Q4')) %>% 
+  na.omit()
+
+ca_vax_county <- ca_vax2 %>% 
+  group_by(county, quarter) %>% 
   summarize(susceptible = sum(susceptible), 
             cum_fully_vax = sum(cum_fully_vax), 
             total_partial_vax = sum(total_partial_vax),
             cum_atleast_one_dose = sum(cum_atleast_one_dose),
             cum_unvax = sum(cum_unvax))
 
-CA_flu_vax <- merge(x = CA_flu_merge_county, y = ca_vax_county, by = "county", all = TRUE)
+CA_flu_vax <- merge(x = CA_flu_merge_demo, y = ca_vax_county, by = c("county", "quarter"), all = TRUE)
 ```
 
 
