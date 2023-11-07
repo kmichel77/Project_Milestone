@@ -22,7 +22,6 @@ View(ca_vax)
 ```
 
 ## Subset rows or columns, as needed
-rename 
 ```{r}
 LACounty_flu <- LACounty_flu %>% 
   add_column(county = "LA County")
@@ -188,16 +187,3 @@ Only the necessary information is outputted (you should suppress, for example, e
 
 The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
 
-```{r}
-
-```
-Flu morbidity datasets (from CA and LA County)
-  Recode column names, values, or formats that are in discordant (dates, etc)DONE 
-  Combine morbidity datasets into a single dataset DONE
-  Select demographic and geographic strata (s) of interest DONE
-  Aggregate the data into a new dataframe to  include only one row per strata of     interest DONE
-Vaccination dataset 
-  Recode values to be consistent with morbidity datasets so they can be joined
-  Select vaccination time frame that fits best with morbidity data and subset        appropriately
-  Select demographic strata(s) of interest
-  Create a vaccination rate metric and summarize to include only one row per strata   of interest
