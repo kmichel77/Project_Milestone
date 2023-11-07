@@ -24,17 +24,17 @@ View(ca_vax)
 ## Subset rows or columns, as needed
 rename 
 ```{r}
-#LACounty_flu <- LACounty_flu %>% 
-  #add_column(county = "LA County")
+LACounty_flu <- LACounty_flu %>% 
+  add_column(county = "LA County")
 
 LACounty_1 <- LACounty_flu %>% 
-  rename("current_infected" = infected_current) %>%
-  rename("new_recovered" = recovered_new) %>% 
-  rename("new_infected" = dx_new) %>% 
-  rename("cumulative_infected" = infected_cum) %>% 
-  rename("cumulative_recovered" = recovered_cum) %>% 
-  rename("new_severe" = severe_new) %>% 
-  rename("cumulative_severe" = severe_cum) %>% 
+  rename("current_infected" = infected_current, 
+         "new_recovered" = recovered_new, 
+         "new_infected" = dx_new, 
+         "cumulative_infected" = infected_cum, 
+         "cumulative_recovered" = recovered_cum, 
+         "new_severe" = severe_new, 
+         "cumulative_severe" = severe_cum) %>% 
   select(-race_eth, -dt_report) %>% 
    mutate(county = word(county , 1  , -2)) %>% 
   mutate(
@@ -45,13 +45,13 @@ LACounty_1 <- LACounty_flu %>%
       date >= "2023-06-01" ~ 'Q4'))
 
 
-#LA_County_2 <- split(LACounty_1, cut(as.Date(LACounty_1$date), "quarter"))
-
 CA_flu1 <- CA_flu %>% 
-  rename("susceptible" = count_susceptible) %>% 
-  rename("new_infected" = new_infections) %>% 
-  rename("age_category" = age_cat, "date" = dt_diagnosis) %>% 
-  select(-time_int, -race_ethnicity, -report_date, -pop, -new_unrecovered, -cumulative_unrecovered) %>%
+  rename("susceptible" = count_susceptible, 
+         "new_infected" = new_infections, 
+         "age_category" = age_cat, 
+         "date" = dt_diagnosis) %>% 
+  select(-time_int, -race_ethnicity, -report_date, -pop, 
+         -new_unrecovered, -cumulative_unrecovered) %>%
   mutate(county = word(county , 1  , -2)) %>%
   mutate(
     quarter = case_when(
@@ -60,26 +60,12 @@ CA_flu1 <- CA_flu %>%
       date >= "2023-03-01" & date <= "2023-05-31" ~ 'Q3', 
       date >= "2023-06-01" ~ 'Q4'))
 
-ca_vax1 <- ca_vax %>% 
-  rename("county" = county_name, "susceptible" = est_population, "sex" = demographic_value) %>%
-  select(-county_type, -suppress_data, - demographic_category) %>% 
-  na.omit()
-  
-
-#can get rid of county_type in ca_vax (only 1) 
-#can get rid of dt_report in LACounty_flu (only 1)
 
 ```
 
-## Create new variables needed for analysis (minimum 2)
 
-New variables should be created based on existing columns; for example Calculating a rate, Combining character strings, Aggregation
 
 ```{r}
-#for ca_vax rate we can calculate vax rates using cum_fully_vax/est_population, but we would have to remove the NA values 
-
-#for CA_flu we can calculate rate of infections/populations 
-
 
 ```
 
@@ -88,12 +74,18 @@ New variables should be created based on existing columns; for example Calculati
 Examples Recode invalid values, Handle missing data, Recode categories
 
 ```{r}
-#recode/remove NA values 
+
+ca_vax1 <- ca_vax %>% 
+  rename("county" = county_name, "susceptible" = est_population, "sex" = demographic_value) %>%
+  select(-county_type, -suppress_data, - demographic_category) %>% 
+  na.omit()
 ```
 
 ## Data re-structured as needed
-
 (aggregated/summarized and/or pivoted)
+
+## Create new variables needed for analysis (minimum 2)
+New variables should be created based on existing columns; for example Calculating a rate, Combining character strings, Aggregation
 
 ```{r}
 
@@ -132,9 +124,29 @@ ca_vax_county <- ca_vax2 %>%
             cum_atleast_one_dose = sum(cum_atleast_one_dose),
             cum_unvax = sum(cum_unvax))
 
+ca_vax_county_2 <- ca_vax_county %>% 
+  add_column(percent_unvax = ca_vax_county$cum_unvax/ca_vax_county$susceptible *100) %>% 
+  add_column(percent_fully_vax = ca_vax_county$cum_fully_vax/ca_vax_county$susceptible *100)
+ 
+
+CA_flu_merge_demo_2 <- CA_flu_merge_demo %>% 
+  add_column(flu_incidence = CA_flu_merge_demo$new_infected/CA_flu_merge_demo$susceptible *100) %>% 
+  add_column(severe_incidence = CA_flu_merge_demo$new_severe/CA_flu_merge_demo$susceptible *100)
+  
+  
 CA_flu_vax <- merge(x = CA_flu_merge_demo, y = ca_vax_county, by = c("county", "quarter"), all = TRUE)
+
+
 ```
 
+## One or more tables with descriptive statistics for 4 data elements
+
+```{r}
+head(CA_flu_merge_demo_2)
+```
+
+
+```{r}
 
 ```
 
@@ -142,14 +154,28 @@ CA_flu_vax <- merge(x = CA_flu_merge_demo, y = ca_vax_county, by = c("county", "
 
 Variable name, Data type, Description
 
+
+1. (CA_flu_merge_demo_2): Formulas
+    flu_incidence = new infected/susceptible *100
+    severe_incidence = new severe/susceptible *100
+
+2. Susceptible = n of population 
+
+3. (CA_flu_merge_demo_2) - Quarter (Q1-4) split up into 4 increments based on timeline in raw data. Q1 = Sep - Nov ’22, Q2 = Dec ’22 - Feb ’23, Q3 = March - May ’23, Q4 = June ‘24
+
+4. (CA_vax_county_2): Definitions
+  cum_fully_vax = n of individuals that have received entire series of vax +            booster if needed
+  total_partial_vax = n of individuals who have received entire series of vax but       have not received booster
+  cum_atleast_one_dose = n of individuals who have received at least one dose with no booster 
+
+
+
+
 ```{r}
+
 
 ```
 
-## One or more tables with descriptive statistics for 4 data elements
-
-```{r}
-#we'll make a ggplot at some point 
 ```
 
 ## Html output that is professionally prepared for presentation
