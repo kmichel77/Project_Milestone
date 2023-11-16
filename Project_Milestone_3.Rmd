@@ -98,6 +98,7 @@ CA_flu_merge_demo <- CA_flu_merge %>%
             new_severe = sum(new_severe), 
             cumulative_severe = sum(cumulative_severe))
 
+
 CA_flu_merge_age <- CA_flu_merge %>% 
   group_by(age_category) %>% 
   summarize(susceptible = sum(susceptible),
@@ -182,7 +183,7 @@ Variable name, Data type, Description
 Only the necessary information is outputted (you should suppress, for example, entire data frame outputs) Use of headers and sub headers to create an organized document
 
 ```{r}
-
+#readr::write_csv(ca_vax, "ca_vax.csv")
 ```
 
 The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
