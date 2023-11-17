@@ -172,7 +172,7 @@ Variable name, Data type, Description
 
 
 ```{r}
-
+readr::write_csv(CA_flu_merge, "CA_flu_merge.csv")
 
 ```
 
@@ -183,7 +183,7 @@ Variable name, Data type, Description
 Only the necessary information is outputted (you should suppress, for example, entire data frame outputs) Use of headers and sub headers to create an organized document
 
 ```{r}
-#readr::write_csv(ca_vax, "ca_vax.csv")
+
 ```
 
 The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
