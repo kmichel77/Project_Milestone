@@ -173,10 +173,10 @@ Variable name, Data type, Description
 ```{r}
 readr::write_csv(CA_flu_merge, "CA_flu_merge.csv")
 readr::write_csv(CA_flu_merge_demo, "CA_flu_merge.csv")
-readr::write_csv(ca_vax_county, "ca_vax_county")
-readr::write_csv(CA_flu_merge_demo_2, "CA_flu_merge_demo_2")
-readr::write_csv(ca_vax_county_2, "ca_vax_county_2")
-readr::write_csv(ca_vax_county, "ca_vax_county")
+readr::write_csv(ca_vax_county, "ca_vax_county.csv")
+readr::write_csv(CA_flu_merge_demo_2, "CA_flu_merge_demo_2.csv")
+readr::write_csv(ca_vax_county_2, "ca_vax_county_2.csv")
+readr::write_csv(ca_vax_county, "ca_vax_county.csv")
 ```
 
 ```
