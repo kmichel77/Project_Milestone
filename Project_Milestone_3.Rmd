@@ -98,7 +98,6 @@ CA_flu_merge_demo <- CA_flu_merge %>%
             new_severe = sum(new_severe), 
             cumulative_severe = sum(cumulative_severe))
 
-
 CA_flu_merge_age <- CA_flu_merge %>% 
   group_by(age_category) %>% 
   summarize(susceptible = sum(susceptible),
@@ -173,7 +172,11 @@ Variable name, Data type, Description
 
 ```{r}
 readr::write_csv(CA_flu_merge, "CA_flu_merge.csv")
-
+readr::write_csv(CA_flu_merge_demo, "CA_flu_merge.csv")
+readr::write_csv(ca_vax_county, "ca_vax_county")
+readr::write_csv(CA_flu_merge_demo_2, "CA_flu_merge_demo_2")
+readr::write_csv(ca_vax_county_2, "ca_vax_county_2")
+readr::write_csv(ca_vax_county, "ca_vax_county")
 ```
 
 ```
