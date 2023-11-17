@@ -1,0 +1,97 @@
+---
+title: "Project Milestone 3"
+output: html_notebook
+---
+
+Authors: Katherine Nazarian, Kimberly Michel
+
+```{r}
+library(readr)
+CA_flu <- read_csv("CA_flu.csv")
+View(CA_flu)
+LACounty_flu <- read_csv("LACounty_flu.csv")
+View(LACounty_flu)
+ca_vax <- read_csv("ca_vax.csv")
+View(ca_vax)
+
+```
+
+## Subset rows or columns, as needed
+
+```{r}
+#can get rid of county_type in ca_vax (only 1) 
+
+subset(ca_vax, select = -county_type)
+#can get rid of dt_report in LACounty_flu (only 1)
+
+subset(LACounty_flu, select = -dt_report)
+
+unique(ca_vax$county_type)
+```
+
+## Create new variables needed for analysis (minimum 2)
+
+New variables should be created based on existing columns; for example Calculating a rate, Combining character strings, Aggregation
+
+```{r}
+#for ca_vax rate we can calculate vax rates using cum_fully_vax/est_population, but we would have to remove the NA values 
+
+```
+#for CA_flu we can calculate rate of infections/populations 
+
+
+```
+
+## Clean variables needed for analysis (minimum 2)
+
+Examples Recode invalid values, Handle missing data, Recode categories
+
+```{r}
+#recode/remove NA values 
+```
+
+## Data re-structured as needed
+
+(aggregated/summarized and/or pivoted)
+
+```{r}
+
+```
+
+## Data dictionary based on clean dataset (minimum 4 data elements), including:
+
+Variable name, Data type, Description
+
+```{r}
+
+```
+
+## One or more tables with descriptive statistics for 4 data elements
+
+```{r}
+#we'll make a ggplot at some point 
+```
+
+## Html output that is professionally prepared for presentation
+
+Only the necessary information is outputted (you should suppress, for example, entire data frame outputs) Use of headers and sub headers to create an organized document
+
+```{r}
+
+```
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+```{r}
+
+```
+Flu morbidity datasets (from CA and LA County)
+  Recode column names, values, or formats that are in discordant (dates, etc)
+  Combine morbidity datasets into a single dataset
+  Select demographic and geographic strata (s) of interest
+  Aggregate the data into a new dataframe to  include only one row per strata of     interest
+Vaccination dataset 
+  Recode values to be consistent with morbidity datasets so they can be joined
+  Select vaccination time frame that fits best with morbidity data and subset        appropriately
+  Select demographic strata(s) of interest
+  Create a vaccination rate metric and summarize to include only one row per strata   of interest

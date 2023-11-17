@@ -11,6 +11,14 @@ library(lubridate)
 library(zoo)
 ```
 
+
+PENDING TASK FOR MS 4:
+- Correct denominator for calculations
+- Add any additional calculations aka corrections
+- Rerun graph to update it 
+- Add interpretation
+
+
 Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
 
 ```{r}
@@ -21,7 +29,53 @@ CA_flu_merge <- read_csv("CA_flu_merge.csv")
 CA_flu_merge_demo <- read_csv("CA_flu_merge_demo.csv")
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+Final datasets for creation of visualization
+```{r}
+CA_flu_vax <- merge(x = CA_flu_merge_demo, y = ca_vax_county, by = c("county", "quarter"), all = TRUE)
+```
+
+Additional calculations
+```{r}
+ca_vax_county_2 <- ca_vax_county_2 %>% 
+  add_column(percent_partial_vax = ca_vax_county_2$total_partial_vax/ca_vax_county$susceptible *100) %>% 
+  add_column(percent_atleast_one_dose = ca_vax_county_2$cum_atleast_one_dose/ca_vax_county$susceptible *100)
+```
+
+Visualization 1 - Comparing vax status among individuals within dataset
+```{r}
+library(tidyverse)
+
+ca_vax_county_2 %>%
+  gather(key, percent_fully_vax ,-quarter, -susceptible, -county, -cum_fully_vax, -cum_atleast_one_dose, -total_partial_vax, -cum_unvax) %>%
+  ggplot(aes(x=quarter, y= percent_fully_vax, fill=key)) +
+    geom_col(position = "dodge") +
+  labs(x = "Quarter", y = "Percentage", fill = "Vaccine Status", title = "Vaccination Status in California by Quarter from September 2022 - June 2023") +
+  scale_fill_discrete(labels = c("atleast one dose", "fully vaccinated", "partially vaccinated", "unvaccinated"))
+
+```
+
+Visualization 1 interpretation
+```{r}
+
+```
+
+Visualization 2
+```{r}
+
+CA_flu_merge_demo_2 %>%
+  gather(key, flu_incidence ,-quarter, -age_category, -county, -cumulative_severe, -current_infected, -new_infected, -new_severe, -susceptible) %>%
+  ggplot(aes(x=quarter, y= flu_incidence, fill=key)) +
+    geom_col(position = "dodge") +
+  labs(x = "Quarter", y = "Percentage", fill = "Flu Cases", title = "Flu Incidence Cases in California by Quarter from September 2022 - June 2023") +
+  scale_fill_discrete(labels = c("new infections", "severe infections")) 
+  
+```
+
+Visualization 2 interpretation
+```{r}
+
+```
 
 When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
 
