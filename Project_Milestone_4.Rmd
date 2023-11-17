@@ -1,14 +1,24 @@
 ---
-title: "Project Milestone 4 "
+title: "Project Milestone 4"
 output: html_notebook
 ---
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+```{r}
+library(readr)
+library(tidyverse)
+library(dplyr)
+library(lubridate)
+library(zoo)
+```
 
 Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
 
 ```{r}
-plot(cars)
+ca_vax_county <- read_csv("ca_vax_county.csv")
+CA_flu_merge_demo_2 <- read_csv("CA_flu_merge_demo_2.csv")
+ca_vax_county_2 <- read_csv("ca_vax_county_2.csv")
+CA_flu_merge <- read_csv("CA_flu_merge.csv")
+CA_flu_merge_demo <- read_csv("CA_flu_merge_demo.csv")
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
