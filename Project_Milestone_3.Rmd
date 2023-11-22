@@ -75,8 +75,9 @@ Examples Recode invalid values, Handle missing data, Recode categories
 ```{r}
 
 ca_vax1 <- ca_vax %>% 
-  rename("county" = county_name, "susceptible" = est_population, "sex" = demographic_value) %>%
-  select(-county_type, -suppress_data, - demographic_category) %>% 
+  rename("county" = county_name, "susceptible" = est_population, "age_category" = demographic_value) %>%
+  filter(demographic_category == "Age Group") %>% 
+  select(-county_type, -suppress_data) %>% 
   na.omit()
 ```
 
@@ -115,6 +116,16 @@ ca_vax2 <- ca_vax1 %>%
       quarter >= "2023-06-01" ~ 'Q4')) %>% 
   na.omit()
 
+#new one 
+ca_vax3 <- ca_vax1 %>% 
+  mutate(
+    quarter = case_when(
+      quarter >= "2022-09-24" & quarter <= "2022-11-30" ~ 'Q1', 
+      quarter >= "2022-12-01" & quarter <= "2023-02-28" ~ 'Q2', 
+      quarter >= "2023-03-01" & quarter <= "2023-05-31" ~ 'Q3', 
+      quarter >= "2023-06-01" ~ 'Q4')) %>% 
+  na.omit()
+
 ca_vax_county <- ca_vax2 %>% 
   group_by(county, quarter) %>% 
   summarize(susceptible = sum(susceptible), 
@@ -122,6 +133,16 @@ ca_vax_county <- ca_vax2 %>%
             total_partial_vax = sum(total_partial_vax),
             cum_atleast_one_dose = sum(cum_atleast_one_dose),
             cum_unvax = sum(cum_unvax))
+
+#new one
+ca_vax_county1 <- ca_vax3 %>% 
+  group_by(county, quarter) %>% 
+  summarize(susceptible = sum(susceptible), 
+            cum_fully_vax = sum(cum_fully_vax), 
+            total_partial_vax = sum(total_partial_vax),
+            cum_atleast_one_dose = sum(cum_atleast_one_dose),
+            cum_unvax = sum(cum_unvax))
+
 
 ca_vax_county_2 <- ca_vax_county %>% 
   add_column(percent_unvax = ca_vax_county$cum_unvax/ca_vax_county$susceptible *100) %>% 
@@ -186,7 +207,11 @@ readr::write_csv(ca_vax_county_2, "ca_vax_county_2.csv")
 Only the necessary information is outputted (you should suppress, for example, entire data frame outputs) Use of headers and sub headers to create an organized document
 
 ```{r}
-
+ggplot(data = nyc_df, aes(x= reorder(boroughs_nyc, +bll_over_5), y=bll_over_5)) +
+  geom_bar(stat = 'identity',color='#003886',fill='#ff6600')+
+  labs(x="boroughs", y="counts of BLL >5ug/dL",
+  title ="New York City: Elevated Blood Lead Levels 2005-2016 by Borough") +
+  theme_bw()
 ```
 
 The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
