@@ -1,0 +1,228 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+library(readr)
+library(tidyverse)
+library(dplyr)
+library(lubridate)
+library(zoo)
+library(ggplot2)
+
+CA_flu <- read_csv("CA_flu.csv")
+View(CA_flu)
+LACounty_flu <- read_csv("LACounty_flu.csv")
+View(LACounty_flu)
+ca_vax <- read_csv("ca_vax.csv")
+View(ca_vax)
+```
+## Subset rows or columns, as needed
+```{r}
+LACounty_flu <- LACounty_flu %>% 
+  add_column(county = "LA County")
+
+LACounty_1 <- LACounty_flu %>% 
+  rename("current_infected" = infected_current, 
+         "new_recovered" = recovered_new, 
+         "new_infected" = dx_new, 
+         "cumulative_infected" = infected_cum, 
+         "cumulative_recovered" = recovered_cum, 
+         "new_severe" = severe_new, 
+         "cumulative_severe" = severe_cum) %>% 
+  select(-race_eth, -dt_report) %>% 
+   mutate(county = word(county , 1  , -2)) %>% 
+  mutate(
+    quarter = case_when(
+      date >= "2022-09-24" & date <= "2022-11-30" ~ 'Q1', 
+      date >= "2022-12-01" & date <= "2023-02-28" ~ 'Q2', 
+      date >= "2023-03-01" & date <= "2023-05-31" ~ 'Q3', 
+      date >= "2023-06-01" ~ 'Q4'))
+
+
+CA_flu1 <- CA_flu %>% 
+  rename("susceptible" = count_susceptible, 
+         "new_infected" = new_infections, 
+         "age_category" = age_cat, 
+         "date" = dt_diagnosis) %>% 
+  select(-time_int, -race_ethnicity, -report_date, -pop, 
+         -new_unrecovered, -cumulative_unrecovered) %>%
+  mutate(county = word(county , 1  , -2)) %>%
+  mutate(
+    quarter = case_when(
+      date >= "2022-09-24" & date <= "2022-11-30" ~ 'Q1', 
+      date >= "2022-12-01" & date <= "2023-02-28" ~ 'Q2', 
+      date >= "2023-03-01" & date <= "2023-05-31" ~ 'Q3', 
+      date >= "2023-06-01" ~ 'Q4'))
+```
+
+## Clean variables needed for analysis (minimum 2)
+```{r}
+ca_vax1 <- ca_vax %>% 
+  rename("county" = county_name, "susceptible" = est_population, "age_category" = demographic_value) %>%
+  filter(demographic_category == "Age Group") %>% 
+  select(-county_type, -suppress_data) %>% 
+  na.omit()
+```
+
+
+```{r}
+CA_flu_merge_demo <- CA_flu_merge %>% 
+  group_by(county, age_category, quarter) %>% 
+  summarize(susceptible = sum(susceptible),
+            new_infected = sum(new_infected), 
+            current_infected = sum(current_infected), 
+            new_severe = sum(new_severe), 
+            cumulative_severe = sum(cumulative_severe))
+
+CA_flu_merge_age <- CA_flu_merge %>% 
+  group_by(age_category) %>% 
+  summarize(susceptible = sum(susceptible),
+            new_infected = sum(new_infected), 
+            current_infected = sum(current_infected), 
+            new_severe = sum(new_severe), 
+            cumulative_severe = sum(cumulative_severe))
+
+edit_ca_vax3 <- edit_ca_vax1 %>% 
+  mutate(
+    quarter = case_when(
+      quarter >= "2022-09-24" & quarter <= "2022-11-30" ~ 'Q1', 
+      quarter >= "2022-12-01" & quarter <= "2023-02-28" ~ 'Q2', 
+      quarter >= "2023-03-01" & quarter <= "2023-05-31" ~ 'Q3', 
+      quarter >= "2023-06-01" ~ 'Q4')) %>% 
+  na.omit()
+
+
+#new one
+edit_ca_vax_county1 <- edit_ca_vax3 %>% 
+  group_by(county, quarter, age_category) %>% 
+  select(-demographic_category) %>% 
+  summarize(susceptible = sum(susceptible), 
+            cum_fully_vax = sum(cum_fully_vax), 
+            total_partial_vax = sum(total_partial_vax),
+            cum_atleast_one_dose = sum(cum_atleast_one_dose),
+            cum_unvax = sum(cum_unvax)) %>%
+  mutate(
+    age_category = case_when(
+      age_category == "Under 5" | age_category == "5-11" | age_category == "12-17" ~ "0-17",
+      age_category == "18-49" ~ "18-49",
+      age_category == "50-64" ~ "50-64", 
+      age_category == "65+" ~ "65+")) %>% 
+  group_by(county, quarter, age_category) %>% 
+  summarise_all(sum)
+#used this one 
+edit_ca_vax_county_1 <- edit_ca_vax_county1 %>%
+  mutate(
+    age_category = case_when(
+      age_category == "Under 5" | age_category == "5-11" | age_category == "12-17" ~ "0-17",
+      age_category == "18-49" ~ "18-49",
+      age_category == "50-64" ~ "50-64", 
+      age_category == "65+" ~ "65+")) %>% 
+  group_by(county, quarter, age_category) %>% 
+  summarise_all(sum) 
+
+#used this one 
+edit_ca_vax_by_Q <- edit_ca_vax_county_1 %>% 
+  group_by(county, quarter) %>%
+  summarise(susceptible = sum(susceptible),
+            cum_fully_vax = sum(cum_fully_vax)) %>% 
+  add_column(percent_fully_vax = edit_ca_vax_by_Q$cum_fully_vax/edit_ca_vax_by_Q$susceptible *100)
+
+edit_ca_vax_county_2 <- edit_ca_vax_county_1 %>%
+  add_column(percent_unvax = edit_ca_vax_county_1$cum_unvax/edit_ca_vax_county_1$susceptible *100) %>% 
+  add_column(percent_fully_vax = edit_ca_vax_county_1$cum_fully_vax/edit_ca_vax_county_1$susceptible *100)
+ 
+
+CA_flu_merge_demo_2 <- CA_flu_merge_demo %>% 
+  add_column(flu_incidence = CA_flu_merge_demo$new_infected/CA_flu_merge_demo$susceptible *100) %>% 
+  add_column(severe_incidence = CA_flu_merge_demo$new_severe/CA_flu_merge_demo$susceptible *100)
+
+  
+edit_CA_flu_vax <- merge(x = CA_flu_merge_demo_2, y = edit_ca_vax_county_2, by = c("county", "quarter", "age_category"))
+
+chart_1_data <- edit_CA_flu_vax %>% 
+ select(-susceptible.x, -susceptible.y, -new_infected, -current_infected, -new_severe, 
+        -cumulative_severe, -cum_fully_vax, -cum_atleast_one_dose, -cum_unvax, -severe_incidence,
+        -total_partial_vax, -percent_unvax)
+
+chart_1_data_1 <- chart_1_data %>% 
+  group_by(county, quarter) %>% 
+  summarise(mean(flu_incidence)) %>%
+  rename(flu_incidence = "mean(flu_incidence)")
+  
+  
+  pivot_wider(names_from = "quarter", 
+              #values_from = "mean(flu_incidence)")
+
+chart_1_data_2 <- chart_1_data %>% 
+  group_by(county, age_category) %>% 
+  summarise(mean(percent_fully_vax)) %>% 
+   rename(percent_fully_vax = "mean(percent_fully_vax)")
+
+#used this one 
+chart_1_data_3 <- edit_ca_vax_by_Q %>% 
+  group_by(county) %>% 
+  summarise(mean(percent_fully_vax)) %>% 
+   rename(percent_fully_vax = "mean(percent_fully_vax)")
+
+#used this one
+ggplot(chart_1_data_3, aes(x= county, y=percent_fully_vax)) +
+    geom_bar(stat = "identity") +
+  labs(x = "Counties in California", y = "% Vaccinated" ,
+   title = "Percent of People Fully Vaccinated in each County in California", 
+   subtitle = "From September 2022 to June 2024") +
+  theme(axis.text.x = element_text(size = 9, angle = 45)) #+theme_bw()
+
+  chart_1_data_1 %>%
+  gather(key, flu_incidence ,-quarter) %>%
+  ggplot(aes(x=quarter, y= flu_incidence, fill=key)) +
+    geom_col(position = "dodge") +
+  labs(x = "Quarter", y = "Percentage", fill = "Flu Cases", title = "Flu Incidence Cases in California by Quarter from September 2022 - June 2023") +
+  scale_fill_discrete(labels = c("new infections", "severe infections"))
+
+```
+
+
+
+```{r}
+#p1 <- chart_1_data_1
+ggplot(chart_1_data_1, aes(x=county, y=mean(flu_incidence))) +
+  geom_line() +
+  ggtitle("Temperature: range 1-10")
+
+  
+  
+  
+coeff <- 10
+ggplot(edit_CA_flu_vax, aes(x=quarter)) +
+  geom_line( aes(y=flu_incidence * coeff)) + 
+  geom_line( aes(y=percent_fully_vax)) + 
+   scale_y_continuous(
+         name = "First Axis",
+    
+    # Add a second axis and specify its features
+    sec.axis = sec_axis(~.*coeff, name="Second Axis")
+   )
+
+```
+
+
+```{r}
+CA_flu_merge_demo_2 %>%
+  gather(key, flu_incidence ,-quarter, -age_category, -county, -cumulative_severe, -current_infected, -new_infected, -new_severe, -susceptible) %>%
+  ggplot(aes(x=quarter, y= flu_incidence, fill=key)) +
+    geom_col(position = "dodge") +
+  labs(x = "Quarter", y = "Percentage", fill = "Flu Cases", title = "Flu Incidence Cases in California by Quarter from September 2022 - June 2023") +
+  scale_fill_discrete(labels = c("new infections", "severe infections")) 
+
+```
+
+
+```{r}
+he preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
