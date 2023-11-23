@@ -1678,7 +1678,24 @@ status.</p>
   summarise(mean(flu_incidence)) %&gt;%
   rename(flu_incidence = &quot;mean(flu_incidence)&quot;)%&gt;%
   pivot_wider(names_from = &quot;quarter&quot;, 
-              values_from = flu_incidence)</code></pre>
+              values_from = flu_incidence)
+
+print(chart_2_data)</code></pre>
+<pre><code>## # A tibble: 57 × 5
+## # Groups:   county [57]
+##    county          Q1    Q2    Q3    Q4
+##    &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Alameda      0.254  2.49  1.75     0
+##  2 Alpine       0.152  2.52  1.77     0
+##  3 Amador       0.255  2.42  1.76     0
+##  4 Butte        0.242  2.51  1.72     0
+##  5 Calaveras    0.252  2.46  1.75     0
+##  6 Colusa       0.248  2.53  1.68     0
+##  7 Contra Costa 0.246  2.48  1.75     0
+##  8 Del Norte    0.243  2.55  1.67     0
+##  9 El Dorado    0.244  2.40  1.88     0
+## 10 Fresno       0.251  2.50  1.72     0
+## # ℹ 47 more rows</code></pre>
 <pre class="r"><code>CA_flu_merge_demo_2 %&gt;%
   gather(key, flu_incidence ,-quarter, -age_category, -county, -cumulative_severe, -current_infected, -new_infected, -new_severe, -susceptible) %&gt;%
   ggplot(aes(x=quarter, y= flu_incidence, fill=key)) +

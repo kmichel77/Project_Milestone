@@ -76,6 +76,8 @@ chart_2_data <- CA_flu_vax %>%
   pivot_wider(names_from = "quarter", 
               values_from = flu_incidence)
 
+print(chart_2_data)
+
 ```
 
 
