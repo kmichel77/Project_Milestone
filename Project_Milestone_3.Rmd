@@ -172,7 +172,7 @@ Variable name, Data type, Description
 
 2. Susceptible = n of population 
 
-3. (CA_flu_merge_demo_2) - Quarter (Q1-4) split up into 4 increments based on timeline in raw data. Q1 = Sep - Nov ’22, Q2 = Dec ’22 - Feb ’23, Q3 = March - May ’23, Q4 = June ‘24
+3. (CA_flu_merge_demo_2) - Quarter (Q1-4) split up into 4 increments based on timeline in raw data. Q1 = Sep - Nov ’22, Q2 = Dec ’22 - Feb ’23, Q3 = March - May ’23, Q4 = June ‘23
 
 4. (CA_vax_county_2): Definitions
   cum_fully_vax = n of individuals that have received entire series of vax +            booster if needed

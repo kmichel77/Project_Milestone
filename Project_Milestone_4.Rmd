@@ -1,11 +1,10 @@
 ---
 title: "Project Milestone 4"
-name: "Katherine Nazarian, Kimberly Michel" 
 output: 
   html_document:
     df_print: paged
 ---
-
+### Katherine Nazarian, Kimberly Michel
 ```{r, include=FALSE}
 library(readr)
 library(tidyverse)
@@ -25,22 +24,24 @@ CA_flu_merge_demo <- read_csv("CA_flu_merge_demo.csv")
 ```
 
 
-## Final datasets for creation of visualization
+### Final datasets for creation of visualization
 ```{r}
 CA_flu_vax <- merge(x = CA_flu_merge_demo_2, y = ca_vax_county, by = c("county", "quarter", "age_category"))
 ```
 
-## Additional calculations
-```{r}
+### Additional calculations
+```{r, message=FALSE}
 ca_vax_by_quarter <- ca_vax_county %>% 
   group_by(county, quarter) %>%
   summarise(susceptible = sum(susceptible),
-            cum_fully_vax = sum(cum_fully_vax)) %>% 
-  add_column(percent_fully_vax = edit_ca_vax_by_Q$cum_fully_vax/edit_ca_vax_by_Q$susceptible *100)
+            cum_fully_vax = sum(cum_fully_vax))
+
+ca_vax_by_quarter <- ca_vax_by_quarter %>% 
+  add_column(percent_fully_vax = ca_vax_by_quarter$cum_fully_vax/ca_vax_by_quarter$susceptible *100)
 
 ```
 
-## Visualization 1 - Comparing vax status among individuals within dataset
+### Visualization 1 - Comparing vaccination status among individuals within dataset
 ```{r, echo = TRUE}
 
 chart_1_data <- ca_vax_by_quarter %>% 
@@ -52,28 +53,19 @@ ggplot(chart_1_data, aes(x= county, y=percent_fully_vax)) +
     geom_bar(stat = "identity") +
   labs(x = "Counties in California", y = "% Vaccinated" ,
    title = "Percent of People Fully Vaccinated in each County in California", 
-   subtitle = "From September 2022 to June 2024") +
+   subtitle = "From September 2022 to June 2023") +
   theme(axis.text.x = element_text(size = 9, angle = 45))
 ```
 
 
-```{r, echo = TRUE}
-ca_vax_county_2 %>%
-  gather(key, percent_fully_vax ,-quarter, -susceptible, -county, -cum_fully_vax, -cum_atleast_one_dose, -total_partial_vax, -cum_unvax) %>%
-  ggplot(aes(x=quarter, y= percent_fully_vax, fill=key)) +
-    geom_col(position = "dodge") +
-  labs(x = "Quarter", y = "Percentage", fill = "Vaccine Status", title = "Vaccination Status in California by Quarter from September 2022 - June 2023") +
-  scale_fill_discrete(labels = c("atleast one dose", "fully vaccinated", "partially vaccinated", "unvaccinated"))
+### Visualization 1 Interpretation
 
-```
+The top 3 counties in California between September 2022 to June 2024 with the highest vaccination rates are Imperial, Marin, and San Mateo, respectively. The 3 counties in California between September 2022 to June 2023 with the lowest vaccination rates are Lassen, Modoc, and Tehama, respectively. The discrepancies between each of these counties, as well as others, could be due to several factors such as access to proper healthcare, vaccination, transportation, or socioeconomic status.
 
-## Visualization 1 Interpretation
 
-Among in the study, majority of participants in California between September 2022 - July 2023 had at least one vaccine dose following some being fully vaccinated, unvaccinated, and partially vaccinated, respectively.
+### Visualization 2
 
-## Visualization 2
-
-```{r}
+```{r, message=FALSE}
 chart_2_data <- CA_flu_vax %>% 
  select(-susceptible.x, -susceptible.y, -new_infected, -current_infected, -new_severe, 
         -cumulative_severe, -cum_fully_vax, -cum_atleast_one_dose, -cum_unvax, -severe_incidence,
@@ -84,10 +76,6 @@ chart_2_data <- CA_flu_vax %>%
   pivot_wider(names_from = "quarter", 
               values_from = flu_incidence)
 
-chart_2_data <- chart_1_data %>% 
-  group_by(county, quarter) %>% 
-  summarise(mean(flu_incidence)) %>%
-  rename(flu_incidence = "mean(flu_incidence)")
 ```
 
 
@@ -102,8 +90,8 @@ CA_flu_merge_demo_2 %>%
   
 ```
 
-## Visualization 2 Interpretation
+### Visualization 2 Interpretation
 
-Among in the study, majority of participants in California between September 2022 - July 2023 suffered from new infections, following some experiencing severe infections.
+Among those in the study, majority of participants in California between September 2022 to June 2023 suffered from new infections, with the highest rate of infections being in Quarter 2 which was between the months of December 2022 to February 2023. The rise in cases during this time could be attributed to flu season. There were minimal cases of severe infections in comparison to new infections. Additionally there is no data found for Quarter 4. 
 
 
