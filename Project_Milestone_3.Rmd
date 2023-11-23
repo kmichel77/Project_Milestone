@@ -116,46 +116,37 @@ ca_vax2 <- ca_vax1 %>%
       quarter >= "2023-06-01" ~ 'Q4')) %>% 
   na.omit()
 
-#new one 
-ca_vax3 <- ca_vax1 %>% 
-  mutate(
-    quarter = case_when(
-      quarter >= "2022-09-24" & quarter <= "2022-11-30" ~ 'Q1', 
-      quarter >= "2022-12-01" & quarter <= "2023-02-28" ~ 'Q2', 
-      quarter >= "2023-03-01" & quarter <= "2023-05-31" ~ 'Q3', 
-      quarter >= "2023-06-01" ~ 'Q4')) %>% 
-  na.omit()
-
 ca_vax_county <- ca_vax2 %>% 
-  group_by(county, quarter) %>% 
+  group_by(county, quarter, age_category) %>% 
+  select(-demographic_category) %>% 
   summarize(susceptible = sum(susceptible), 
             cum_fully_vax = sum(cum_fully_vax), 
             total_partial_vax = sum(total_partial_vax),
             cum_atleast_one_dose = sum(cum_atleast_one_dose),
-            cum_unvax = sum(cum_unvax))
+            cum_unvax = sum(cum_unvax)) %>%
+  mutate(
+    age_category = case_when(
+      age_category == "Under 5" | age_category == "5-11" | age_category == "12-17" ~ "0-17",
+      age_category == "18-49" ~ "18-49",
+      age_category == "50-64" ~ "50-64", 
+      age_category == "65+" ~ "65+")) %>% 
+  group_by(county, quarter, age_category) %>% 
+  summarise_all(sum)
 
-#new one
-ca_vax_county1 <- ca_vax3 %>% 
-  group_by(county, quarter) %>% 
-  summarize(susceptible = sum(susceptible), 
-            cum_fully_vax = sum(cum_fully_vax), 
-            total_partial_vax = sum(total_partial_vax),
-            cum_atleast_one_dose = sum(cum_atleast_one_dose),
-            cum_unvax = sum(cum_unvax))
+ca_vax_by_quarter <- ca_vax_county %>% 
+  group_by(county, quarter) %>%
+  summarise(susceptible = sum(susceptible),
+            cum_fully_vax = sum(cum_fully_vax)) %>% 
+  add_column(percent_fully_vax = edit_ca_vax_by_Q$cum_fully_vax/edit_ca_vax_by_Q$susceptible *100)
 
-
-ca_vax_county_2 <- ca_vax_county %>% 
-  add_column(percent_unvax = ca_vax_county$cum_unvax/ca_vax_county$susceptible *100) %>% 
-  add_column(percent_fully_vax = ca_vax_county$cum_fully_vax/ca_vax_county$susceptible *100)
  
 
 CA_flu_merge_demo_2 <- CA_flu_merge_demo %>% 
   add_column(flu_incidence = CA_flu_merge_demo$new_infected/CA_flu_merge_demo$susceptible *100) %>% 
   add_column(severe_incidence = CA_flu_merge_demo$new_severe/CA_flu_merge_demo$susceptible *100)
   
-  
-CA_flu_vax <- merge(x = CA_flu_merge_demo, y = ca_vax_county, by = c("county", "quarter"), all = TRUE)
 
+CA_flu_vax <- merge(x = CA_flu_merge_demo_2, y = ca_vax_county, by = c("county", "quarter", "age_category"))
 
 ```
 
