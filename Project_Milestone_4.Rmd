@@ -27,19 +27,37 @@ CA_flu_merge_demo <- read_csv("CA_flu_merge_demo.csv")
 
 ## Final datasets for creation of visualization
 ```{r}
-CA_flu_vax <- merge(x = CA_flu_merge_demo, y = ca_vax_county, by = c("county", "quarter"), all = TRUE)
+CA_flu_vax <- merge(x = CA_flu_merge_demo_2, y = ca_vax_county, by = c("county", "quarter", "age_category"))
 ```
 
 ## Additional calculations
 ```{r}
-ca_vax_county_2 <- ca_vax_county_2 %>% 
-  add_column(percent_partial_vax = ca_vax_county_2$total_partial_vax/ca_vax_county$susceptible *100) %>% 
-  add_column(percent_atleast_one_dose = ca_vax_county_2$cum_atleast_one_dose/ca_vax_county$susceptible *100)
+ca_vax_by_quarter <- ca_vax_county %>% 
+  group_by(county, quarter) %>%
+  summarise(susceptible = sum(susceptible),
+            cum_fully_vax = sum(cum_fully_vax)) %>% 
+  add_column(percent_fully_vax = edit_ca_vax_by_Q$cum_fully_vax/edit_ca_vax_by_Q$susceptible *100)
+
 ```
 
 ## Visualization 1 - Comparing vax status among individuals within dataset
 ```{r, echo = TRUE}
 
+chart_1_data <- ca_vax_by_quarter %>% 
+  group_by(county) %>% 
+  summarise(mean(percent_fully_vax)) %>% 
+   rename(percent_fully_vax = "mean(percent_fully_vax)")
+
+ggplot(chart_1_data, aes(x= county, y=percent_fully_vax)) +
+    geom_bar(stat = "identity") +
+  labs(x = "Counties in California", y = "% Vaccinated" ,
+   title = "Percent of People Fully Vaccinated in each County in California", 
+   subtitle = "From September 2022 to June 2024") +
+  theme(axis.text.x = element_text(size = 9, angle = 45))
+```
+
+
+```{r, echo = TRUE}
 ca_vax_county_2 %>%
   gather(key, percent_fully_vax ,-quarter, -susceptible, -county, -cum_fully_vax, -cum_atleast_one_dose, -total_partial_vax, -cum_unvax) %>%
   ggplot(aes(x=quarter, y= percent_fully_vax, fill=key)) +
@@ -54,6 +72,24 @@ ca_vax_county_2 %>%
 Among in the study, majority of participants in California between September 2022 - July 2023 had at least one vaccine dose following some being fully vaccinated, unvaccinated, and partially vaccinated, respectively.
 
 ## Visualization 2
+
+```{r}
+chart_2_data <- CA_flu_vax %>% 
+ select(-susceptible.x, -susceptible.y, -new_infected, -current_infected, -new_severe, 
+        -cumulative_severe, -cum_fully_vax, -cum_atleast_one_dose, -cum_unvax, -severe_incidence,
+        -total_partial_vax) %>% 
+  group_by(county, quarter) %>% 
+  summarise(mean(flu_incidence)) %>%
+  rename(flu_incidence = "mean(flu_incidence)")%>%
+  pivot_wider(names_from = "quarter", 
+              values_from = flu_incidence)
+
+chart_2_data <- chart_1_data %>% 
+  group_by(county, quarter) %>% 
+  summarise(mean(flu_incidence)) %>%
+  rename(flu_incidence = "mean(flu_incidence)")
+```
+
 
 ```{r, echo = TRUE}
 
