@@ -4,7 +4,12 @@ output: html_notebook
 ---
 
 ```{r, include=FALSE}
+
 library(readr)
+library(tidyverse)
+library(dplyr)
+library(lubridate)
+library(zoo)
 ca_vax_county <- read_csv("ca_vax_county.csv")
 CA_flu_merge_demo_2 <- read_csv("CA_flu_merge_demo_2.csv")
 
@@ -39,6 +44,27 @@ ggplot(chart_1_data, aes(x= county, y=percent_fully_vax)) +
   theme(axis.text.x = element_text(size = 9, angle = 45))
 
 ```
+```{r}
+chart_2_data <- CA_flu_vax %>% 
+ select(-susceptible.x, -susceptible.y, -new_infected, -current_infected, -new_severe, 
+        -cumulative_severe, -cum_fully_vax, -cum_atleast_one_dose, -cum_unvax, -severe_incidence,
+        -total_partial_vax) %>% 
+  group_by(county, quarter) %>% 
+  summarise(mean(flu_incidence)) %>%
+  rename(flu_incidence = "mean(flu_incidence)")%>%
+  pivot_wider(names_from = "quarter", 
+              values_from = flu_incidence)
+
+print(chart_2_data)
+```
+```{r}
+CA_flu_merge_demo_2 %>%
+  gather(key, flu_incidence ,-quarter, -age_category, -county, -cumulative_severe, -current_infected, -new_infected, -new_severe, -susceptible) %>%
+  ggplot(aes(x=quarter, y= flu_incidence, fill=key)) +
+    geom_col(position = "dodge") +
+  labs(x = "Quarter", y = "Percentage", fill = "Flu Cases", title = "Flu Incidence Cases in California by Quarter from September 2022 - June 2023") +
+  scale_fill_discrete(labels = c("new infections", "severe infections")) 
+```
 
 Problem Statement (1-2 paragraphs)
 ```{r}
@@ -46,26 +72,10 @@ Problem Statement (1-2 paragraphs)
 ```
 
 Methods, for each data source
-```{r}
-
-```
-
-Source
-```{r}
-
-```
-
-Years and/or dates of data
-```{r}
-
-```
-
-Description of cleaning and creating new variables
-```{r}
-
-```
-
-Analytic methods
+  Source
+  Years and/or dates of data
+  Description of cleaning and creating new variables
+  Analytic methods
 ```{r}
 
 ```
