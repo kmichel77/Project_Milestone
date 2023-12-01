@@ -81,11 +81,23 @@ We wanted to identify whether there were any discrepancies or disparities among 
    Description of cleaning and creating new variables
    Analytic methods
 
+Source:
+Datasets appear to be from a health department within CA or Los Angeles. The data that was collected includes cases of flu as well as vaccine uptake data. Timeframe of each dataset ranges between September 2022 - June 2023 within different counties across California.
 
+Description of cleaning and creating new variables:
+ -Renamed all dataset column names to be in snake case
+ -Created new columns with formulas to calculate percentages and rates among each df
+ -Reformatted several values. Ex: from chr to num 
+ -Cleaned data by removing columns within df that we no longer needed 
+ -Created new datasets by merging several together
+ -Data wrangling among all datasets to ensure consistency
+ -Adjusted category to be by quarter
+    -Quarter (Q1-4) split up into 4 increments based on timeline in raw data. Q1 = Sep - Nov ’22, Q2 = Dec ’22 - Feb ’23, Q3 = March - May ’23, Q4 = June ‘23
+ 
+ Analytic methods:
+Retrospective data analysis to identify vaccination and flu incidence rates among California residents among September 2022 - June 2023.
+ 
 
-## Results
-
-
-## Discussion (interpretation of results)
-Maximum of 1,000 words
+## Results + Discussion
+There was no correlation between COVID-19 vaccination rates and flu incidence rates in California among September 2022 - June 2023. The graphs display that Q2 (Dec ’22 - Feb ’23), had the highest flu incidence rates among all age groups, following Q3 (March - May ’23), and Q1 (Sep - Nov ’22), respectively. Q4 (June ‘23) had no data. This could be due to several external factors such as flu season during the colder seasons. This data includes the average incidence rates of all counties. Counties Imperial (94.6%) and Lassen (33.7%) have the highest and lowest vaccination rates among all counties, however the have equal average incidence rates for each quarter further solidifying that there is no correlation between the two. 
 
