@@ -1,6 +1,8 @@
 ---
 title: "Project Milestone 6"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r, include=FALSE}
@@ -30,13 +32,14 @@ One print quality plot or chart as requested in scenario
 For groups of 3, one additional print quality table or plot of your choice (can support the requested data in the scenario, or answer a different question using the same data sources)
 
 
-```{r}
+```{r, echo = FALSE, message=FALSE}
 chart_1_data <- ca_vax_by_quarter %>% 
   group_by(county) %>% 
   summarise(mean(percent_fully_vax)) %>% 
    rename(percent_fully_vax = "mean(percent_fully_vax)")
 
-ggplot(chart_1_data, aes(x= county, y=percent_fully_vax)) +
+
+ggplot(chart_1_data, aes(x= reorder(county, -percent_fully_vax), y=percent_fully_vax)) +
     geom_bar(stat = "identity") +
   labs(x = "Counties in California", y = "% Vaccinated" ,
    title = "Percent of People Fully Vaccinated in each County in California", 
@@ -44,7 +47,8 @@ ggplot(chart_1_data, aes(x= county, y=percent_fully_vax)) +
   theme(axis.text.x = element_text(size = 9, angle = 45))
 
 ```
-```{r}
+
+```{r, echo = FALSE, message= FALSE}
 chart_2_data <- CA_flu_vax %>% 
  select(-susceptible.x, -susceptible.y, -new_infected, -current_infected, -new_severe, 
         -cumulative_severe, -cum_fully_vax, -cum_atleast_one_dose, -cum_unvax, -severe_incidence,
@@ -57,13 +61,15 @@ chart_2_data <- CA_flu_vax %>%
 
 print(chart_2_data)
 ```
-```{r}
+```{r, echo=FALSE}
 CA_flu_merge_demo_2 %>%
-  gather(key, flu_incidence ,-quarter, -age_category, -county, -cumulative_severe, -current_infected, -new_infected, -new_severe, -susceptible) %>%
-  ggplot(aes(x=quarter, y= flu_incidence, fill=key)) +
+  gather(key, flu_incidence ,-quarter,-age_category, -county, -cumulative_severe, -current_infected, -new_infected, -new_severe, -susceptible) %>%
+  ggplot(aes(x=quarter, y= flu_incidence, fill=age_category)) +
     geom_col(position = "dodge") +
-  labs(x = "Quarter", y = "Percentage", fill = "Flu Cases", title = "Flu Incidence Cases in California by Quarter from September 2022 - June 2023") +
-  scale_fill_discrete(labels = c("new infections", "severe infections")) 
+  labs(x = "Quarter", y = "Incidence Rate", fill = "Age Category", 
+       title = "Flu Incidence Cases in California by Quarter for each Age Category", 
+       subtitle = "From September 2022 - June 2023") +
+  scale_fill_discrete(labels = c("0-17", "18-49", "50-64", "65+"))
 ```
 
 Problem Statement (1-2 paragraphs)
