@@ -72,25 +72,20 @@ CA_flu_merge_demo_2 %>%
   scale_fill_discrete(labels = c("0-17", "18-49", "50-64", "65+"))
 ```
 
-Problem Statement (1-2 paragraphs)
-```{r}
+## Problem Statement (1-2 paragraphs)
 
-```
 
-Methods, for each data source
-  Source
-  Years and/or dates of data
-  Description of cleaning and creating new variables
-  Analytic methods
-```{r}
 
-```
+## Methods, for each data source
+  ### Source, Years and/or dates of data, 
+  ### Description of cleaning and creating new variables
+  ### Analytic methods
 
-Results
-```{r}
 
-```
 
-Discussion (interpretation of results)
+## Results
+
+
+## Discussion (interpretation of results)
 Maximum of 1,000 words
 
