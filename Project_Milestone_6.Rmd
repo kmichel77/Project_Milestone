@@ -3,6 +3,9 @@ title: "Project Milestone 6"
 output:
   html_document:
     df_print: paged
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r, include=FALSE}
@@ -26,11 +29,7 @@ ca_vax_by_quarter <- ca_vax_by_quarter %>%
   add_column(percent_fully_vax = ca_vax_by_quarter$cum_fully_vax/ca_vax_by_quarter$susceptible *100)
 ```
 
-# Visualizations
-One print quality table as requested in scenario
-One print quality plot or chart as requested in scenario
-For groups of 3, one additional print quality table or plot of your choice (can support the requested data in the scenario, or answer a different question using the same data sources)
-
+## Visualizations
 
 ```{r, echo = FALSE, message=FALSE}
 chart_1_data <- ca_vax_by_quarter %>% 
@@ -61,6 +60,7 @@ chart_2_data <- CA_flu_vax %>%
 
 print(chart_2_data)
 ```
+
 ```{r, echo=FALSE}
 CA_flu_merge_demo_2 %>%
   gather(key, flu_incidence ,-quarter,-age_category, -county, -cumulative_severe, -current_infected, -new_infected, -new_severe, -susceptible) %>%
@@ -72,32 +72,48 @@ CA_flu_merge_demo_2 %>%
   scale_fill_discrete(labels = c("0-17", "18-49", "50-64", "65+"))
 ```
 
-## Problem Statement (1-2 paragraphs)
-We wanted to identify whether there were any discrepancies or disparities among flu infections in California between September 2022 - June 2023. Comparing flu infections rates and vaccination rates by age allowed us the opportunity to identify these gaps. Showcasing the data by different age categories allows us to understand which groups are affected most by severe or new infections based on vaccination rates. This could allow us to further our research in implementing different policies to close the gaps.
+## Problem Statement
 
+We wanted to identify whether there were any discrepancies or
+disparities among flu infections in California between September 2022 -
+June 2023. Comparing flu infections rates and vaccination rates by age
+allowed us the opportunity to identify these gaps. Showcasing the data
+by different age categories allows us to understand which groups are
+affected most by severe or new infections based on vaccination rates.
+This could allow us to further our research in implementing different
+policies to close the gaps.
 
-## Methods, for each data source
-   Source, Years and/or dates of data, 
-   Description of cleaning and creating new variables
-   Analytic methods
+## Methods
 
-Source:
-Datasets appear to be from a health department within CA or Los Angeles. The data that was collected includes cases of flu as well as vaccine uptake data. Timeframe of each dataset ranges between September 2022 - June 2023 within different counties across California.
+Source: Datasets appear to be from a health department within CA or Los
+Angeles. The data that was collected includes cases of flu as well as
+vaccine uptake data. Timeframe of each dataset ranges between September
+2022 - June 2023 within different counties across California.
 
-Description of cleaning and creating new variables:
- -Renamed all dataset column names to be in snake case
- -Created new columns with formulas to calculate percentages and rates among each df
- -Reformatted several values. Ex: from chr to num 
- -Cleaned data by removing columns within df that we no longer needed 
- -Created new datasets by merging several together
- -Data wrangling among all datasets to ensure consistency
- -Adjusted category to be by quarter
-    -Quarter (Q1-4) split up into 4 increments based on timeline in raw data. Q1 = Sep - Nov ’22, Q2 = Dec ’22 - Feb ’23, Q3 = March - May ’23, Q4 = June ‘23
- 
- Analytic methods:
-Retrospective data analysis to identify vaccination and flu incidence rates among California residents among September 2022 - June 2023.
- 
+Description of cleaning and creating new variables: -Renamed all dataset
+column names to be in snake case -Created new columns with formulas to
+calculate percentages and rates among each df -Reformatted several
+values. Ex: from chr to num -Cleaned data by removing columns within df
+that we no longer needed -Created new datasets by merging several
+together -Data wrangling among all datasets to ensure consistency
+-Adjusted category to be by quarter -Quarter (Q1-4) split up into 4
+increments based on timeline in raw data. Q1 = Sep - Nov '22, Q2 = Dec
+'22 - Feb '23, Q3 = March - May '23, Q4 = June '23
+
+Analytic methods: Retrospective data analysis to identify vaccination
+and flu incidence rates among California residents among September
+2022 - June 2023.
 
 ## Results + Discussion
-There was no correlation between COVID-19 vaccination rates and flu incidence rates in California among September 2022 - June 2023. The graphs display that Q2 (Dec ’22 - Feb ’23), had the highest flu incidence rates among all age groups, following Q3 (March - May ’23), and Q1 (Sep - Nov ’22), respectively. Q4 (June ‘23) had no data. This could be due to several external factors such as flu season during the colder seasons. This data includes the average incidence rates of all counties. Counties Imperial (94.6%) and Lassen (33.7%) have the highest and lowest vaccination rates among all counties, however the have equal average incidence rates for each quarter further solidifying that there is no correlation between the two. 
 
+There was no correlation between COVID-19 vaccination rates and flu
+incidence rates in California among September 2022 - June 2023. The
+graphs display that Q2 (Dec '22 - Feb '23), had the highest flu
+incidence rates among all age groups, following Q3 (March - May '23),
+and Q1 (Sep - Nov '22), respectively. Q4 (June '23) had no data. This
+could be due to several external factors such as flu season during the
+colder seasons. This data includes the average incidence rates of all
+counties. Counties Imperial (94.6%) and Lassen (33.7%) have the highest
+and lowest vaccination rates among all counties, however the have equal
+average incidence rates for each quarter further solidifying that there
+is no correlation between the two.
