@@ -7,6 +7,7 @@ editor_options:
   markdown: 
     wrap: 72
 ---
+Authors: Kathy Nazarian, Kimberly Michel
 
 ```{r, include=FALSE}
 
@@ -41,7 +42,7 @@ chart_1_data <- ca_vax_by_quarter %>%
 ggplot(chart_1_data, aes(x= reorder(county, -percent_fully_vax), y=percent_fully_vax)) +
     geom_bar(stat = "identity") +
   labs(x = "Counties in California", y = "% Vaccinated" ,
-   title = "Percent of People Fully Vaccinated in each County in California", 
+   title = "Fig.1: Percent of People Fully Vaccinated in each County in California", 
    subtitle = "From September 2022 to June 2023") +
   theme(axis.text.x = element_text(size = 9, angle = 45))
 
@@ -67,7 +68,7 @@ CA_flu_merge_demo_2 %>%
   ggplot(aes(x=quarter, y= flu_incidence, fill=age_category)) +
     geom_col(position = "dodge") +
   labs(x = "Quarter", y = "Incidence Rate", fill = "Age Category", 
-       title = "Flu Incidence Cases in California by Quarter for each Age Category", 
+       title = "Fig. 2: Flu Incidence Cases in California by Quarter for each Age Category", 
        subtitle = "From September 2022 - June 2023") +
   scale_fill_discrete(labels = c("0-17", "18-49", "50-64", "65+"))
 ```
@@ -85,20 +86,47 @@ policies to close the gaps.
 
 ## Methods
 
-Source: Datasets appear to be from a health department within CA or Los
+Source: Datasets appear to be from health departments within CA and Los
 Angeles. The data that was collected includes cases of flu as well as
 vaccine uptake data. Timeframe of each dataset ranges between September
 2022 - June 2023 within different counties across California.
 
-Description of cleaning and creating new variables: -Renamed all dataset
-column names to be in snake case -Created new columns with formulas to
-calculate percentages and rates among each df -Reformatted several
-values. Ex: from chr to num -Cleaned data by removing columns within df
-that we no longer needed -Created new datasets by merging several
-together -Data wrangling among all datasets to ensure consistency
--Adjusted category to be by quarter -Quarter (Q1-4) split up into 4
-increments based on timeline in raw data. Q1 = Sep - Nov '22, Q2 = Dec
-'22 - Feb '23, Q3 = March - May '23, Q4 = June '23
+Description of cleaning and creating new variables:
+
+-   We renamed all data set column names to be in snake case and have
+    similar names to each other to facilitate merging the data sets
+    later.
+
+-   New columns with formulas were created to calculate COVID
+    vaccination rates and flu incidence rates for the respective data
+    frame. In order to achieve this, we had to reformat several values
+    from chr to num.
+
+-   We cleaned data by removing columns in each data frame that we no
+    longer needed. This included removing demographics that we did not
+    use for analysis, including race/ethnicity and gender. We also
+    excluded columns that would not be used for calculations, like the
+    number of people who were unvaccinated or the number of new severe
+    flu infections.
+
+-   We created new datasets by merging several together. Los Angeles was
+    initially excluded from the data set that included all other
+    counties in California, so we were able to add it to that data set
+    by making Los Angeles its own column. We then merged the COVID
+    vaccination data set and the flu incidence data set to be able to
+    analyze the relationship using one data frame.
+
+-   The date category was adjusted to be by quarter. Quarters (Q1-4)
+    were split up into 4 increments based on timeline in raw data. For
+    reference:
+
+    -   Q1 = Sep - Nov '22
+
+    -   Q2 = Dec '22 - Feb '23
+
+    -   Q3 = March - May '23
+
+    -   Q4 = June '23
 
 Analytic methods: Retrospective data analysis to identify vaccination
 and flu incidence rates among California residents among September
@@ -106,14 +134,8 @@ and flu incidence rates among California residents among September
 
 ## Results + Discussion
 
-There was no correlation between COVID-19 vaccination rates and flu
-incidence rates in California among September 2022 - June 2023. The
-graphs display that Q2 (Dec '22 - Feb '23), had the highest flu
-incidence rates among all age groups, following Q3 (March - May '23),
-and Q1 (Sep - Nov '22), respectively. Q4 (June '23) had no data. This
-could be due to several external factors such as flu season during the
-colder seasons. This data includes the average incidence rates of all
-counties. Counties Imperial (94.6%) and Lassen (33.7%) have the highest
-and lowest vaccination rates among all counties, however the have equal
-average incidence rates for each quarter further solidifying that there
-is no correlation between the two.
+Figure 1 demonstrates the average COVID-19 vaccination rates of all
+counties in California, only including those that are fully vaccinated. The graph shows that Imperial County (94.6%) and Lassen County (33.7%) have the highest
+and lowest vaccination rates among all counties. Figure 2 display that Quarter 2 (Dec '22 - Feb '23), had the highest flu incidence rates among all age groups, following Q3 (March - May '23), and Q1 (Sep - Nov '22), respectively. Q4 (June '23) had no data. 
+
+Based on the results of our graphs, we can conclude that there was no correlation between COVID-19 vaccination rates and flu incidence rates in California between September 2022 - June 2023. Although there is a notable difference in vaccination rates within the counties, the average incidence rates for each quarter are similar for each county, further solidifying that there is no correlation between the two. The pattern in Figure 2 tells us that the highest flu incidence rates occurred during Quarter 2, between December 2022 and February 2023. This could be due to several external factors such as flu season during the colder seasons as there was no difference in COVID vaccination rates during this time. 
