@@ -128,14 +128,10 @@ Description of cleaning and creating new variables:
 
     -   Q4 = June '23
 
-Analytic methods: Retrospective data analysis to identify vaccination
-and flu incidence rates among California residents among September
-2022 - June 2023.
+Analytic methods: Retrospective data analysis to identify vaccination and flu incidence rates among California residents among September 2022 - June 2023.
 
 ## Results + Discussion
 
-Figure 1 demonstrates the average COVID-19 vaccination rates of all
-counties in California, only including those that are fully vaccinated. The graph shows that Imperial County (94.6%) and Lassen County (33.7%) have the highest
-and lowest vaccination rates among all counties. Figure 2 display that Quarter 2 (Dec '22 - Feb '23), had the highest flu incidence rates among all age groups, following Q3 (March - May '23), and Q1 (Sep - Nov '22), respectively. Q4 (June '23) had no data. 
+Figure 1 demonstrates the average COVID-19 vaccination rates of all counties in California, only including those that are fully vaccinated. The graph shows that Imperial County (94.6%) and Lassen County (33.7%) have the highest and lowest vaccination rates among all counties. Figure 2 display that Quarter 2 (Dec '22 - Feb '23), had the highest flu incidence rates among all age groups, following Q3 (March - May '23), and Q1 (Sep - Nov '22), respectively. Q4 (June '23) had no data. 
 
 Based on the results of our graphs, we can conclude that there was no correlation between COVID-19 vaccination rates and flu incidence rates in California between September 2022 - June 2023. Although there is a notable difference in vaccination rates within the counties, the average incidence rates for each quarter are similar for each county, further solidifying that there is no correlation between the two. The pattern in Figure 2 tells us that the highest flu incidence rates occurred during Quarter 2, between December 2022 and February 2023. This could be due to several external factors such as flu season during the colder seasons as there was no difference in COVID vaccination rates during this time. 
